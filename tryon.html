@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#A3254A">
+  <title>AuraBlend | Virtual try-on</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar topbar--with-back">
+    <a class="icon-btn" href="create.html" aria-label="Back to Create shade"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a>
+    <h1 class="title">Virtual try-on</h1>
+  </header>
+
+  <main class="stack" data-tryon style="--shade:#C7566B;--strength:.7">
+    <section class="stage" aria-label="Try-on preview">
+      <svg id="face" width="200" height="228" viewBox="0 0 200 228" role="img" aria-label="Face outline with the selected lipstick shade on the lips">
+        <ellipse cx="100" cy="112" rx="70" ry="94" fill="#fff" stroke="#3B0F24" stroke-width="2"/>
+        <path d="M62 92q12-10 24 0M114 92q12-10 24 0" fill="none" stroke="#3B0F24" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M100 104v32q-8 4-12 0" fill="none" stroke="#6B5560" stroke-width="2" stroke-linecap="round"/>
+        <path id="lips" d="M68 156q16-14 32-6q16-8 32 6q-16 20-32 22q-16-2-32-22z" stroke="#A3254A" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M70 158q30 6 60 0" fill="none" stroke="#A3254A" stroke-width="1.5"/>
+      </svg>
+      <img id="photo" alt="Your uploaded photo" hidden>
+      <p class="small muted" id="stage-caption">Wireframe: your photo appears here with the shade on your lips</p>
+    </section>
+
+    <section class="stack--sm stack" aria-labelledby="shade-label">
+      <div id="shade-label" style="font-size:14px;font-weight:700">Shade</div>
+      <div class="dots">
+        <button class="dot-btn" type="button" style="--c:#C7566B" data-shade="#C7566B" data-name="Rose Dream" aria-pressed="true" aria-label="Rose Dream"></button>
+        <button class="dot-btn" type="button" style="--c:#A23A62" data-shade="#A23A62" data-name="Berry Kiss" aria-pressed="false" aria-label="Berry Kiss"></button>
+        <button class="dot-btn" type="button" style="--c:#E58B6B" data-shade="#E58B6B" data-name="Peach Glow" aria-pressed="false" aria-label="Peach Glow"></button>
+        <button class="dot-btn" type="button" style="--c:#B3202F" data-shade="#B3202F" data-name="Classic Red" aria-pressed="false" aria-label="Classic Red"></button>
+        <button class="dot-btn" type="button" style="--c:#F2735C" data-shade="#F2735C" data-name="Sunset Coral" aria-pressed="false" aria-label="Sunset Coral"></button>
+      </div>
+      <p class="small muted" id="shade-name-out" role="status">Rose Dream &middot; #C7566B</p>
+    </section>
+
+    <div class="slider">
+      <div class="slider__row"><label for="strength">Colour strength</label><span id="strength-out">70%</span></div>
+      <input id="strength" type="range" min="0" max="100" value="70">
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" type="button" id="upload-btn">Upload photo</button>
+      <button class="btn" type="button" id="camera-btn" onclick="document.getElementById('photo-input').click()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Take photo</button>
+    </div>
+    <input class="visually-hidden" id="photo-input" type="file" accept="image/*" capture="user" tabindex="-1" aria-label="Choose or take a photo">
+
+    <div class="stack--sm stack">
+      <a class="btn btn--primary btn--block" href="machine.html">Love it? Send to machine</a>
+      <p class="note" style="text-align:center">Preview only. The photo is not saved. The on-screen colour is an estimate of the real result.</p>
+    </div>
+  </main>
+  <nav class="tabbar" aria-label="Main">
+    <a class="tab" href="index.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
+    <a class="tab" href="create.html" aria-current="page"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Create</a>
+    <a class="tab" href="ideas.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17v4M17 19h4"/></svg>Ideas</a>
+    <a class="tab" href="collection.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>Saved</a>
+    <a class="tab" href="machine.html"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>Machine</a>
+  </nav>
+</div>
+<script src="script.js" defer></script>
+</body>
+</html>
