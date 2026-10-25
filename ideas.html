@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraBlend - Shade Ideas & Live Creator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="AuraBlend Logo.jpg">
+</head>
+<body class="min-h-screen flex flex-col justify-between p-3 md:p-6 text-slate-200 bg-[#07090e]">
+
+  <div class="max-w-[1400px] w-full mx-auto space-y-5">
+    
+    <!-- HEADER BAR -->
+    <header class="flex flex-wrap items-center justify-between gap-4 bg-[#111625] px-5 py-3.5 rounded-2xl border border-slate-800/80 shadow-xl">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-500 via-pink-500 to-amber-400 p-0.5 flex items-center justify-center shadow-lg shadow-rose-500/20">
+          <div class="w-full h-full bg-[#111625] rounded-[10px] flex items-center justify-center">
+            <i class="fa-solid fa-wand-magic-sparkles text-amber-400 text-lg"></i>
+          </div>
+        </div>
+        <div>
+          <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-rose-100 to-pink-300 bg-clip-text text-transparent">AuraBlend</span>
+          <p class="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">AI IoT LIPSTICK FORMULATOR</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2.5 bg-[#0b0e17] px-4 py-1.5 rounded-full border border-slate-800 text-xs font-medium">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]"></span>
+        <span class="text-slate-300">IoT Device: <span class="text-emerald-400 font-semibold">Ready (Aura-x1)</span></span>
+      </div>
+    </header>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="bg-[#111625] px-4 py-2.5 rounded-xl border border-slate-800/80 shadow-md flex items-center justify-center sm:justify-start gap-2 overflow-x-auto">
+      <a href="index.html" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a2338] text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="matchine.html" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a2338] text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-microchip text-amber-400"></i> Matchine</a>
+      <a href="ideas.html" class="px-4 py-2 rounded-lg bg-rose-500/15 border border-rose-500/40 text-rose-300 text-xs font-bold flex items-center gap-2 transition"><i class="fa-solid fa-lightbulb text-yellow-400"></i> Ideas</a>
+      <a href="saved.html" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a2338] text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-bookmark text-pink-400"></i> Saved</a>
+      <a href="create.html" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a2338] text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-circle-plus text-emerald-400"></i> Create</a>
+    </nav>
+
+    <!-- IDEAS & LIVE SHADEMAKER -->
+    <main class="bg-[#111625] rounded-2xl border border-slate-800/80 p-6 shadow-xl space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-lightbulb text-yellow-400"></i> Manual & AI Live Shade Generator
+          </h2>
+          <p class="text-xs text-slate-400">Experiment manually with pigment sliders or generate AI shades instantly to watch the exact color render live.</p>
+        </div>
+        <button onclick="randomAiIdea()" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-xs font-bold px-4 py-2.5 rounded-xl shadow-md transition flex items-center gap-2">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Generate AI Shade Idea
+        </button>
+      </div>
+
+      <!-- Live Studio Section -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        
+        <!-- Lip Canvas Preview -->
+        <div class="md:col-span-5 flex flex-col items-center justify-center">
+          <div class="relative w-52 h-52 rounded-full bg-gradient-to-b from-[#181a28] to-[#0c0d15] p-3 flex items-center justify-center border border-slate-800 shadow-2xl">
+            <canvas id="lipCanvas" width="200" height="200" class="w-full h-full"></canvas>
+          </div>
+          <div class="text-center mt-3">
+            <h3 id="shade-name" class="font-bold text-base text-rose-200 tracking-wide">Velvet Crimson Idea</h3>
+            <p id="shade-hex" class="text-xs font-mono font-medium text-slate-400 mt-0.5">#9B111E</p>
+          </div>
+        </div>
+
+        <!-- Manual Sliders Control -->
+        <div class="md:col-span-7 bg-[#0b0e17] p-5 rounded-xl border border-slate-800 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <span class="text-xs font-bold text-slate-300">Manual Pigment Adjustments</span>
+            <button onclick="resetSliders()" class="text-xs text-amber-400 hover:text-amber-300 font-medium"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+          </div>
+
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs font-semibold">
+              <span class="text-pink-400">Pink Pigment</span>
+              <span id="val-pink" class="text-slate-300 font-mono">30%</span>
+            </div>
+            <input type="range" id="slider-pink" min="0" max="100" value="30" oninput="updateLiveShade()" class="w-full">
+          </div>
+
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs font-semibold">
+              <span class="text-rose-400">Red Pigment</span>
+              <span id="val-red" class="text-slate-300 font-mono">60%</span>
+            </div>
+            <input type="range" id="slider-red" min="0" max="100" value="60" oninput="updateLiveShade()" class="w-full">
+          </div>
+
+          <div class="space-y-1">
+            <div class="flex justify-between text-xs font-semibold">
+              <span class="text-amber-500">Brown Pigment</span>
+              <span id="val-brown" class="text-slate-300 font-mono">30%</span>
+            </div>
+            <input type="range" id="slider-brown" min="0" max="100" value="30" oninput="updateLiveShade()" class="w-full">
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- SCRIPT FOR LIVE SHADE RENDERING -->
+  <script>
+    window.onload = function() { updateLiveShade(); };
+
+    function updateLiveShade() {
+      const p = parseInt(document.getElementById('slider-pink').value);
+      const r = parseInt(document.getElementById('slider-red').value);
+      const b = parseInt(document.getElementById('slider-brown').value);
+
+      document.getElementById('val-pink').textContent = p + "%";
+      document.getElementById('val-red').textContent = r + "%";
+      document.getElementById('val-brown').textContent = b + "%";
+
+      let redComp = (r * 2.2) + (p * 1.5) + (b * 1.1);
+      let greenComp = (p * 0.35) + (b * 0.45);
+      let blueComp = (p * 0.75) + (b * 0.15);
+
+      const finalR = Math.min(255, Math.max(20, Math.floor(redComp)));
+      const finalG = Math.min(255, Math.max(10, Math.floor(greenComp)));
+      const finalB = Math.min(255, Math.max(10, Math.floor(blueComp)));
+
+      const hex = `#${((1 << 24) + (finalR << 16) + (finalG << 8) + finalB).toString(16).slice(1).toUpperCase()}`;
+      document.getElementById('shade-hex').textContent = hex;
+
+      drawLipsCanvas(hex);
+    }
+
+    function drawLipsCanvas(hexColor) {
+      const canvas = document.getElementById('lipCanvas');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.save();
+      ctx.translate(100, 100);
+
+      const radialGlow = ctx.createRadialGradient(0, 0, 10, 0, 0, 95);
+      radialGlow.addColorStop(0, hexColor);
+      radialGlow.addColorStop(0.85, hexColor);
+      radialGlow.addColorStop(1, '#07090e');
+
+      ctx.fillStyle = radialGlow;
+      ctx.beginPath();
+      ctx.arc(0, 0, 90, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = hexColor;
+      ctx.beginPath();
+      ctx.moveTo(-60, 0);
+      ctx.bezierCurveTo(-35, -45, -15, -40, 0, -20);
+      ctx.bezierCurveTo(15, -40, 35, -45, 60, 0);
+      ctx.bezierCurveTo(35, -5, 15, -2, 0, -8);
+      ctx.bezierCurveTo(-15, -2, -35, -5, -60, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(-60, 0);
+      ctx.bezierCurveTo(-35, 45, 35, 45, 60, 0);
+      ctx.bezierCurveTo(35, 5, 15, 8, 0, -2);
+      ctx.bezierCurveTo(-15, 8, -35, 5, -60, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function randomAiIdea() {
+      document.getElementById('slider-pink').value = Math.floor(Math.random() * 80) + 10;
+      document.getElementById('slider-red').value = Math.floor(Math.random() * 80) + 10;
+      document.getElementById('slider-brown').value = Math.floor(Math.random() * 60) + 10;
+      updateLiveShade();
+    }
+
+    function resetSliders() {
+      document.getElementById('slider-pink').value = 30;
+      document.getElementById('slider-red').value = 60;
+      document.getElementById('slider-brown').value = 30;
+      updateLiveShade();
+    }
+  </script>
+</body>
+</html>

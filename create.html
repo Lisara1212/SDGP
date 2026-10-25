@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraBlend - Create & Formulate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="AuraBlend Logo.jpg">
+
+</head>
+<body class="min-h-screen flex flex-col justify-between p-3 md:p-6 text-slate-200 bg-[#07090e]">
+
+  <div class="max-w-[1400px] w-full mx-auto space-y-5">
+    
+    <!-- HEADER BAR -->
+    <header class="flex flex-wrap items-center justify-between gap-4 bg-[#111625] px-5 py-3.5 rounded-2xl border border-slate-800/80 shadow-xl">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-500 via-pink-500 to-amber-400 p-0.5 flex items-center justify-center shadow-lg shadow-rose-500/20">
+          <div class="w-full h-full bg-[#111625] rounded-[10px] flex items-center justify-center">
+            <i class="fa-solid fa-wand-magic-sparkles text-amber-400 text-lg"></i>
+          </div>
+        </div>
+        <div>
+          <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-rose-100 to-pink-300 bg-clip-text text-transparent">AuraBlend</span>
+          <p class="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">AI IoT LIPSTICK FORMULATOR</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2.5 bg-[#0b0e17] px-4 py-1.5 rounded-full border border-slate-800 text-xs font-medium">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]"></span>
+        <span class="text-slate-300">IoT Device: <span class="text-emerald-400 font-semibold">Ready (Aura-x1)</span></span>
+      </div>
+    </header>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="bg-[#111625] px-4 py-2.5 rounded-xl border border-slate-800/80 shadow-md flex items-center justify-center sm:justify-start gap-2 overflow-x-auto">
+      <a href="index.html" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a2338] text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="matchine.html" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a2338] text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-microchip text-amber-400"></i> Matchine</a>
+      <a href="ideas.html" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a2338] text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-lightbulb text-yellow-400"></i> Ideas</a>
+      <a href="saved.html" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a2338] text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-bookmark text-pink-400"></i> Saved</a>
+      <a href="create.html" class="px-4 py-2 rounded-lg bg-rose-500/15 border border-rose-500/40 text-rose-300 text-xs font-bold flex items-center gap-2 transition"><i class="fa-solid fa-circle-plus text-emerald-400"></i> Create</a>
+    </nav>
+
+    <!-- CREATE PAGE: IMAGE ANALYSIS & STUDIO -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+
+      <!-- SECTION 1: IMAGE ANALYSIS -->
+      <section class="lg:col-span-5 bg-[#111625] rounded-2xl border border-slate-800/80 p-5 flex flex-col justify-between shadow-xl">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-bold flex items-center gap-2 text-white">
+              <i class="fa-solid fa-camera text-rose-500"></i> 1. Image Analysis
+            </h2>
+            <div class="flex bg-[#0b0e17] p-1 rounded-xl border border-slate-800 text-xs font-semibold">
+              <button id="btn-mode-cam" onclick="setMode('cam')" class="px-3 py-1.5 rounded-lg bg-[#1a2338] text-white shadow-sm flex items-center gap-1.5 transition"><i class="fa-solid fa-video text-rose-400"></i> Live Cam</button>
+              <button id="btn-mode-upload" onclick="setMode('upload')" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white flex items-center gap-1.5 transition"><i class="fa-solid fa-upload text-slate-400"></i> Upload</button>
+            </div>
+          </div>
+
+          <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-[#07090e] border border-slate-800 flex items-center justify-center">
+            <video id="webcam" autoplay playsinline class="w-full h-full object-cover hidden"></video>
+            <img id="upload-preview" class="w-full h-full object-cover hidden" alt="Uploaded target" />
+            
+            <div class="absolute inset-3 rounded-xl p-3 flex flex-col justify-between pointer-events-none">
+              <div class="flex justify-between text-[11px] font-bold text-rose-400 tracking-wider">
+                <span>[SKIN ZONE]</span>
+                <span>[OUTFIT ZONE]</span>
+              </div>
+              <div class="mx-auto w-44 h-56 border-2 border-amber-500/70 rounded-[50%] flex items-center justify-center relative">
+                <span class="text-xs font-semibold text-amber-300/80 bg-[#0b0e17]/80 px-2.5 py-1 rounded-full border border-amber-500/30">Center Face & Outfit</span>
+              </div>
+              <p class="text-center text-[11px] text-slate-400 font-medium pb-1">Ensure adequate lighting for extraction</p>
+            </div>
+            <input type="file" id="file-input" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
+            <canvas id="processCanvas" class="hidden"></canvas>
+          </div>
+        </div>
+
+        <div class="mt-4 space-y-3">
+          <button onclick="runAiAnalysis()" class="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:brightness-110 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-rose-500/25 flex items-center justify-center gap-2 transition">
+            <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i> Scan & Formulate AI Match
+          </button>
+
+          <!-- Skin & Outfit Detected Swatches -->
+          <div class="bg-[#0b0e17] p-3 rounded-xl border border-slate-800 flex items-center justify-around gap-2">
+            <div class="flex items-center gap-2.5">
+              <div id="skin-swatch" class="w-8 h-8 rounded-full border border-slate-700 bg-slate-800"></div>
+              <div>
+                <p class="text-[10px] text-slate-400 font-bold uppercase">Skin Color</p>
+                <p id="skin-hex" class="text-xs font-mono font-semibold text-slate-200">#------</p>
+              </div>
+            </div>
+            <div class="w-[1px] h-8 bg-slate-800"></div>
+            <div class="flex items-center gap-2.5">
+              <div id="outfit-swatch" class="w-8 h-8 rounded-full border border-slate-700 bg-slate-800"></div>
+              <div>
+                <p class="text-[10px] text-slate-400 font-bold uppercase">Outfit Color</p>
+                <p id="outfit-hex" class="text-xs font-mono font-semibold text-slate-200">#------</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: BESPOKE COLOR FORMULATION STUDIO -->
+      <section class="lg:col-span-7 bg-[#111625] rounded-2xl border border-slate-800/80 p-5 flex flex-col justify-between shadow-xl">
+        <div>
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div>
+              <h2 class="text-lg font-bold text-white">2. Bespoke Color Formulation Studio</h2>
+              <p class="text-xs text-slate-400">Real-time shade simulation & pigment adjustment</p>
+            </div>
+            <div class="flex items-center gap-2 bg-[#0b0e17] px-3 py-1.5 rounded-xl border border-slate-800">
+              <span class="text-xs text-slate-400 font-medium">Finish:</span>
+              <select id="finish-select" onchange="updateStudio()" class="bg-transparent text-xs font-semibold text-white focus:outline-none cursor-pointer">
+                <option value="satin" class="bg-[#111625]">Satin Glow</option>
+                <option value="matte" class="bg-[#111625]">Matte Velvet</option>
+                <option value="gloss" class="bg-[#111625]">High Gloss</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center mt-2">
+            <div class="md:col-span-5 flex flex-col items-center justify-center">
+              <div class="relative w-52 h-52 rounded-full bg-gradient-to-b from-[#181a28] to-[#0c0d15] p-3 flex items-center justify-center border border-slate-800 shadow-2xl">
+                <canvas id="lipCanvas" width="200" height="200" class="w-full h-full"></canvas>
+              </div>
+              <div class="text-center mt-3">
+                <h3 id="shade-name" class="font-bold text-base text-rose-200 tracking-wide">Royal Velvet Crimson</h3>
+                <p id="shade-hex" class="text-xs font-mono font-medium text-slate-400 mt-0.5">#9B111E</p>
+              </div>
+            </div>
+
+            <div class="md:col-span-7 bg-[#0b0e17] p-4 rounded-xl border border-slate-800 space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                <span class="text-xs font-bold text-slate-300">Pigment Ratio (3-Liquid Cartridges)</span>
+                <button onclick="resetSliders()" class="text-xs text-amber-400 hover:text-amber-300 font-medium"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs font-semibold"><span class="text-pink-400">Pink Pigment</span><span id="val-pink" class="text-slate-300 font-mono">30%</span></div>
+                <input type="range" id="slider-pink" min="0" max="100" value="30" oninput="updateStudio()" class="w-full">
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs font-semibold"><span class="text-rose-400">Red Pigment</span><span id="val-red" class="text-slate-300 font-mono">70%</span></div>
+                <input type="range" id="slider-red" min="0" max="100" value="70" oninput="updateStudio()" class="w-full">
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs font-semibold"><span class="text-amber-500">Brown Pigment</span><span id="val-brown" class="text-slate-300 font-mono">40%</span></div>
+                <input type="range" id="slider-brown" min="0" max="100" value="40" oninput="updateStudio()" class="w-full">
+              </div>
+
+              <div class="flex gap-3 pt-2">
+                <button onclick="triggerDispense()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 text-xs font-bold py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-bolt"></i> Instant Dispense Formula
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+
+  <!-- SCRIPT FOR CREATE PAGE -->
+  <!-- SCRIPT FOR CREATE PAGE -->
+  <script>
+    let webcamStream = null;
+    let activeMode = 'cam';
+
+    // Dictionary for dynamic shade naming based on pigment dominance
+    const shadeNames = {
+      crimson: ["Imperial Scarlet", "Deep Berry Red", "Royal Velvet Crimson", "Bespoke Ruby"],
+      pink: ["Satin Rose Pink", "Blush Petal Pink", "Neon Peony", "Sunset Mauve"],
+      brown: ["Warm Mochaccino", "Terracotta Nude", "Spiced Cocoa", "Caramel Latte"],
+      balanced: ["Harmony Rosewood", "Aura Custom Blend", "Cashmere Neutral", "Velvet Mauve"]
+    };
+
+    window.onload = function() { setMode('cam'); updateStudio(); };
+
+    function setMode(mode) {
+      activeMode = mode;
+      const btnCam = document.getElementById('btn-mode-cam');
+      const btnUpload = document.getElementById('btn-mode-upload');
+      const uploadPreview = document.getElementById('upload-preview');
+      const fileInput = document.getElementById('file-input');
+
+      if (mode === 'cam') {
+        btnCam.className = "px-3 py-1.5 rounded-lg bg-[#1a2338] text-white shadow-sm flex items-center gap-1.5 transition";
+        btnUpload.className = "px-3 py-1.5 rounded-lg text-slate-400 hover:text-white flex items-center gap-1.5 transition";
+        uploadPreview.classList.add('hidden');
+        startCamera();
+      } else {
+        btnUpload.className = "px-3 py-1.5 rounded-lg bg-[#1a2338] text-white shadow-sm flex items-center gap-1.5 transition";
+        btnCam.className = "px-3 py-1.5 rounded-lg text-slate-400 hover:text-white flex items-center gap-1.5 transition";
+        stopCamera();
+        if(!uploadPreview.src || uploadPreview.src === "") fileInput.click();
+        else uploadPreview.classList.remove('hidden');
+      }
+    }
+
+    async function startCamera() {
+      const webcam = document.getElementById('webcam');
+      try {
+        webcamStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+        webcam.srcObject = webcamStream;
+        webcam.classList.remove('hidden');
+      } catch (err) { console.log("Camera unavailable"); }
+    }
+
+    function stopCamera() {
+      if (webcamStream) { webcamStream.getTracks().forEach(t => t.stop()); webcamStream = null; }
+      document.getElementById('webcam').classList.add('hidden');
+    }
+
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.getElementById('upload-preview');
+          img.src = e.target.result;
+          img.classList.remove('hidden');
+          stopCamera();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // LIVE SCAN & EXACT MATCH GENERATION
+    function runAiAnalysis() {
+      const processCanvas = document.getElementById('processCanvas');
+      const ctx = processCanvas.getContext('2d');
+      let sourceElem = activeMode === 'cam' ? document.getElementById('webcam') : document.getElementById('upload-preview');
+      
+      processCanvas.width = sourceElem.videoWidth || sourceElem.naturalWidth || 640;
+      processCanvas.height = sourceElem.videoHeight || sourceElem.naturalHeight || 480;
+      ctx.drawImage(sourceElem, 0, 0, processCanvas.width, processCanvas.height);
+
+      setTimeout(() => {
+        // Sample skin from face target zone & outfit from clothing zone
+        const skinData = ctx.getImageData(processCanvas.width * 0.4, processCanvas.height * 0.3, 20, 20).data;
+        const outfitData = ctx.getImageData(processCanvas.width * 0.2, processCanvas.height * 0.7, 40, 40).data;
+
+        const skinHex = rgbToHex(skinData[0], skinData[1], skinData[2]);
+        const outfitHex = rgbToHex(outfitData[0], outfitData[1], outfitData[2]);
+
+        // Display exact scanned swatches
+        document.getElementById('skin-swatch').style.backgroundColor = skinHex;
+        document.getElementById('skin-hex').textContent = skinHex;
+        document.getElementById('outfit-swatch').style.backgroundColor = outfitHex;
+        document.getElementById('outfit-hex').textContent = outfitHex;
+
+        // Calculate pigment ratios dynamically based on skin undertone warmth & outfit tone
+        let skinWarmth = skinData[0] - skinData[1]; // Red vs Green channel delta
+        let outfitBrightness = (outfitData[0] + outfitData[1] + outfitData[2]) / 3;
+
+        let pinkVal, redVal, brownVal;
+
+        if (skinWarmth > 30) {
+          // Warm skin undertone -> Harmonize with rich red & brown
+          redVal = Math.min(85, Math.max(35, Math.round((outfitData[0] / 255) * 60 + 30)));
+          brownVal = Math.min(70, Math.max(20, Math.round((255 - outfitBrightness) * 0.5 + 20)));
+          pinkVal = Math.max(10, 100 - redVal - brownVal);
+        } else {
+          // Cool/Neutral skin undertone -> Harmonize with vibrant pinks & soft reds
+          pinkVal = Math.min(80, Math.max(35, Math.round((outfitData[2] / 255) * 60 + 20)));
+          redVal = Math.min(70, Math.max(25, Math.round((outfitData[0] / 255) * 50)));
+          brownVal = Math.max(10, 100 - pinkVal - redVal);
+        }
+
+        // Apply sliders
+        document.getElementById('slider-pink').value = pinkVal;
+        document.getElementById('slider-red').value = redVal;
+        document.getElementById('slider-brown').value = brownVal;
+
+        updateStudio();
+      }, 400);
+    }
+
+    function rgbToHex(r, g, b) {
+      return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`;
+    }
+
+    function updateStudio() {
+      const p = parseInt(document.getElementById('slider-pink').value);
+      const r = parseInt(document.getElementById('slider-red').value);
+      const b = parseInt(document.getElementById('slider-brown').value);
+
+      document.getElementById('val-pink').textContent = p + "%";
+      document.getElementById('val-red').textContent = r + "%";
+      document.getElementById('val-brown').textContent = b + "%";
+
+      let redComp = (r * 2.2) + (p * 1.5) + (b * 1.1);
+      let greenComp = (p * 0.35) + (b * 0.45);
+      let blueComp = (p * 0.75) + (b * 0.15);
+
+      const finalR = Math.min(255, Math.max(20, Math.floor(redComp)));
+      const finalG = Math.min(255, Math.max(10, Math.floor(greenComp)));
+      const finalB = Math.min(255, Math.max(10, Math.floor(blueComp)));
+
+      const hex = rgbToHex(finalR, finalG, finalB);
+      document.getElementById('shade-hex').textContent = hex;
+
+      // Dynamic naming based on active slider weights
+      let matchedName = "Aura Custom Blend";
+      if (r >= p && r >= b) {
+        matchedName = shadeNames.crimson[r % shadeNames.crimson.length];
+      } else if (p >= r && p >= b) {
+        matchedName = shadeNames.pink[p % shadeNames.pink.length];
+      } else if (b >= r && b >= p) {
+        matchedName = shadeNames.brown[b % shadeNames.brown.length];
+      } else {
+        matchedName = shadeNames.balanced[0];
+      }
+
+      document.getElementById('shade-name').textContent = matchedName;
+      drawLipsCanvas(hex, document.getElementById('finish-select').value);
+    }
+
+    function drawLipsCanvas(hexColor, finish) {
+      const canvas = document.getElementById('lipCanvas');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.save();
+      ctx.translate(100, 100);
+
+      const radialGlow = ctx.createRadialGradient(0, 0, 10, 0, 0, 95);
+      radialGlow.addColorStop(0, hexColor);
+      radialGlow.addColorStop(0.85, hexColor);
+      radialGlow.addColorStop(1, '#07090e');
+
+      ctx.fillStyle = radialGlow;
+      ctx.beginPath();
+      ctx.arc(0, 0, 90, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = hexColor;
+      ctx.beginPath();
+      ctx.moveTo(-60, 0);
+      ctx.bezierCurveTo(-35, -45, -15, -40, 0, -20);
+      ctx.bezierCurveTo(15, -40, 35, -45, 60, 0);
+      ctx.bezierCurveTo(35, -5, 15, -2, 0, -8);
+      ctx.bezierCurveTo(-15, -2, -35, -5, -60, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(-60, 0);
+      ctx.bezierCurveTo(-35, 45, 35, 45, 60, 0);
+      ctx.bezierCurveTo(35, 5, 15, 8, 0, -2);
+      ctx.bezierCurveTo(-15, 8, -35, 5, -60, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function resetSliders() {
+      document.getElementById('slider-pink').value = 30;
+      document.getElementById('slider-red').value = 70;
+      document.getElementById('slider-brown').value = 40;
+      updateStudio();
+    }
+
+    function triggerDispense() {
+      const hex = document.getElementById('shade-hex').textContent;
+      const name = document.getElementById('shade-name').textContent;
+      window.location.href = `matchine.html?hex=${encodeURIComponent(hex)}&name=${encodeURIComponent(name)}`;
+    }
+  </script>
+</body>
+</html>

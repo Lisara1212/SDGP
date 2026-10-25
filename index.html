@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraBlend - Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="AuraBlend Logo.jpg">
+</head>
+<body class="min-h-screen flex flex-col justify-between p-3 md:p-6 text-slate-200 bg-[#07090e]">
+
+  <div class="max-w-[1400px] w-full mx-auto space-y-5">
+    
+    <!-- HEADER BAR -->
+    <header class="flex flex-wrap items-center justify-between gap-4 bg-[#111625] px-5 py-3.5 rounded-2xl border border-slate-800/80 shadow-xl">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-500 via-pink-500 to-amber-400 p-0.5 flex items-center justify-center shadow-lg shadow-rose-500/20">
+          <div class="w-full h-full bg-[#111625] rounded-[10px] flex items-center justify-center">
+            <i class="fa-solid fa-wand-magic-sparkles text-amber-400 text-lg"></i>
+          </div>
+        </div>
+        <div>
+          <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-rose-100 to-pink-300 bg-clip-text text-transparent">AuraBlend</span>
+          <p class="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">AI IoT LIPSTICK FORMULATOR</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2.5 bg-[#0b0e17] px-4 py-1.5 rounded-full border border-slate-800 text-xs font-medium">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]"></span>
+        <span class="text-slate-300">IoT Device: <span class="text-emerald-400 font-semibold">Ready (Aura-x1)</span></span>
+      </div>
+    </header>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="bg-[#111625] px-4 py-2.5 rounded-xl border border-slate-800/80 shadow-md flex items-center justify-center sm:justify-start gap-2 overflow-x-auto">
+      <a href="index.html" class="px-4 py-2 rounded-lg bg-rose-500/15 border border-rose-500/40 text-rose-300 text-xs font-bold flex items-center gap-2 transition"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="matchine.html" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a2338] text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-microchip text-amber-400"></i> Matchine</a>
+      <a href="ideas.html" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a2338] text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-lightbulb text-yellow-400"></i> Ideas</a>
+      <a href="saved.html" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a2338] text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-bookmark text-pink-400"></i> Saved</a>
+      <a href="create.html" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a2338] text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-circle-plus text-emerald-400"></i> Create</a>
+    </nav>
+
+    <!-- HOME CONTENT -->
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-[#111625] border border-slate-800/80 rounded-2xl p-8 shadow-xl">
+      <div class="lg:col-span-7 space-y-4">
+        <span class="bg-rose-500/10 text-rose-400 border border-rose-500/30 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Next-Gen Beauty IoT</span>
+        <h1 class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-snug">
+          Where Skin Undertones Meet Outfit Harmony in <span class="bg-gradient-to-r from-rose-400 to-pink-500 bg-clip-text text-transparent">Instant Pigment Blends</span>
+        </h1>
+        <p class="text-sm text-slate-300 leading-relaxed">
+          <strong>AuraBlend</strong> is an advanced AI-powered IoT lipstick formulator that bridges computer vision with customized cosmetics. By seamlessly scanning your facial skin undertone and clothing color spectrum, our system calculates and dispenses the exact matching pigment combination using pure Pink, Red, and Brown liquid cartridges.
+        </p>
+        <div class="flex gap-4 pt-2">
+          <a href="create.html" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:brightness-110 text-white font-bold text-xs px-6 py-3 rounded-xl shadow-lg shadow-rose-500/20 transition flex items-center gap-2">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Start Creating Now
+          </a>
+          <a href="matchine.html" class="bg-[#1a2338] hover:bg-[#222d48] border border-slate-700 text-slate-200 font-bold text-xs px-6 py-3 rounded-xl transition flex items-center gap-2">
+            <i class="fa-solid fa-microchip text-amber-400"></i> View Hardware
+          </a>
+        </div>
+      </div>
+
+      <!-- Mixed Shades Showcase Grid -->
+      <div class="lg:col-span-5 bg-[#0b0e17] p-5 rounded-2xl border border-slate-800 space-y-3">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Signature Red • Pink • Brown Harmonies</h3>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="p-3 bg-[#111625] rounded-xl border border-slate-800 text-center space-y-1">
+            <div class="w-full h-12 rounded-lg bg-[#9B111E] shadow-inner"></div>
+            <p class="text-xs font-bold text-white">Royal Crimson</p>
+            <p class="text-[10px] font-mono text-slate-400">Red 70% / Brown 30%</p>
+          </div>
+          <div class="p-3 bg-[#111625] rounded-xl border border-slate-800 text-center space-y-1">
+            <div class="w-full h-12 rounded-lg bg-[#D85A7E] shadow-inner"></div>
+            <p class="text-xs font-bold text-white">Satin Rose</p>
+            <p class="text-[10px] font-mono text-slate-400">Pink 60% / Red 40%</p>
+          </div>
+          <div class="p-3 bg-[#111625] rounded-xl border border-slate-800 text-center space-y-1">
+            <div class="w-full h-12 rounded-lg bg-[#8D4A38] shadow-inner"></div>
+            <p class="text-xs font-bold text-white">Warm Cocoa</p>
+            <p class="text-[10px] font-mono text-slate-400">Brown 65% / Red 35%</p>
+          </div>
+          <div class="p-3 bg-[#111625] rounded-xl border border-slate-800 text-center space-y-1">
+            <div class="w-full h-12 rounded-lg bg-[#C4526B] shadow-inner"></div>
+            <p class="text-xs font-bold text-white">Blush Mauve</p>
+            <p class="text-[10px] font-mono text-slate-400">Pink 50% / Red 50%</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</body>
+</html>
