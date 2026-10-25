@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#130a14">
+  <title>Machine | AuraBlend</title>
+  <meta name="description" content="Watch the AuraBlend prototype machine mix your lipstick shade: cartridge levels, progress and a live log.">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="machine">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+<symbol id="i-create" viewBox="0 0 24 24"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2z"/></symbol>
+<symbol id="i-ideas" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></symbol>
+<symbol id="i-saved" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
+<symbol id="i-machine" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+<symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></symbol>
+<symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M4 12h16"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
+<symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 6.2 6 10.5A6 6 0 0 1 6 13.5C6 9.2 12 3 12 3z"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"/></symbol>
+<symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M3 7h3c4 0 5 10 9 10h6M3 17h3c1.7 0 2.8-1.2 3.7-2.7M21 17l-3-3m3 3l-3 3M15 7h6m0 0l-3-3m3 3l-3 3"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol>
+</defs></svg>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="AuraBlend home">
+      <span class="brand__mark" role="img" aria-label="AuraBlend lipstick emblem"></span>
+      <span class="brand__name">Aura<i>Blend</i><span class="brand__tag">Your shade &bull; Your style</span></span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span>Home</span></a>
+      <a href="create.html"><svg class="icon" aria-hidden="true"><use href="#i-create"/></svg><span>Create</span></a>
+      <a href="ideas.html"><svg class="icon" aria-hidden="true"><use href="#i-ideas"/></svg><span>Ideas</span></a>
+      <a href="saved.html"><svg class="icon" aria-hidden="true"><use href="#i-saved"/></svg><span>Saved</span></a>
+      <a href="machine.html" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#i-machine"/></svg><span>Machine</span></a>
+    </nav>
+    <a class="pill" href="machine.html"><span class="dot" aria-hidden="true"></span><b>Machine</b> simulation</a>
+  </div>
+</header>
+
+<main id="main" tabindex="-1"><div class="wrap">
+
+<div class="page-head rise">
+  <div><p class="eyebrow">Hardware</p><h1>Machine</h1>
+  <p>The machine pumps three pigments, mixes them and moulds the bullet. This page runs as a simulation until the ESP32 is connected.</p></div>
+  <span class="pill"><span class="dot" id="status-dot" aria-hidden="true"></span><b>Status:</b> <span id="device-status">Ready</span></span>
+</div>
+<div class="grid-2">
+  <section class="card panel rise" aria-labelledby="cart-title">
+    <div class="row-between"><h2 id="cart-title">Cartridges</h2><button class="btn btn--ghost btn--sm" type="button" id="refill-btn"><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg> Refill</button></div>
+    <p class="panel__sub">Liquid colour left in each tube.</p>
+    <div class="carts">
+      <div class="cart" id="cart-pink" style="--c:#e4608c"><div class="cart__tube"><div class="cart__fill"></div></div><b>Pink</b><output id="lvl-pink">85%</output></div>
+      <div class="cart" id="cart-red" style="--c:#b01530"><div class="cart__tube"><div class="cart__fill"></div></div><b>Red</b><output id="lvl-red">62%</output></div>
+      <div class="cart" id="cart-brown" style="--c:#8a4a30"><div class="cart__tube"><div class="cart__fill"></div></div><b>Brown</b><output id="lvl-brown">90%</output></div>
+    </div>
+    <h3 style="font-size:18px;margin-top:28px">Recent jobs</h3>
+    <ul class="jobs" id="jobs"></ul>
+  </section>
+
+  <section class="card panel rise" style="--i:1" aria-labelledby="job-title">
+    <h2 id="job-title">Current job</h2>
+    <div class="target"><div class="target__color" id="target-color"></div><div><h3 id="target-name" style="font-size:24px">Royal Crimson</h3><p class="small muted" id="target-hex">#A72E40</p></div></div>
+    <div class="progress" role="progressbar" aria-label="Dispense progress"><span id="progress-bar"></span></div>
+    <ol class="stages" id="stages"><li>Receive</li><li>Pump</li><li>Mix</li><li>Mould</li><li>Done</li></ol>
+    <div class="terminal" id="terminal" role="log" aria-live="polite"></div>
+    <div class="actions"><button class="btn btn--block" type="button" id="start-btn"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg> Run dispense simulation</button></div>
+  </section>
+</div>
+
+</div></main>
+
+<footer class="site-footer"><div class="wrap">
+  <span>&copy; AuraBlend &middot; </span>
+  <span>Demo colours only. The prototype mixes food-safe colour to show the idea. Not for use on lips.</span>
+</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="app.js" defer></script>
+</body>
+</html>
