@@ -52,10 +52,10 @@ body::before {
   content: "";
   position: fixed; inset: 0; z-index: -1;
   background:
-    radial-gradient(900px 600px at 85% -10%, rgba(224, 82, 122, .22), transparent 60%),
-    radial-gradient(800px 600px at -10% 20%, rgba(168, 34, 79, .22), transparent 60%),
-    radial-gradient(700px 500px at 60% 110%, rgba(227, 192, 141, .12), transparent 60%),
-    var(--bg);
+          radial-gradient(900px 600px at 85% -10%, rgba(224, 82, 122, .22), transparent 60%),
+          radial-gradient(800px 600px at -10% 20%, rgba(168, 34, 79, .22), transparent 60%),
+          radial-gradient(700px 500px at 60% 110%, rgba(227, 192, 141, .12), transparent 60%),
+          var(--bg);
 }
 img, svg, canvas, video { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
