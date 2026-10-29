@@ -1,9 +1,3 @@
-/* =====================================================
-   AuraBlend - style.css  ("Midnight plum + rose gold")
-   One shared stylesheet. No frameworks, no CDN needed
-   (only the optional Google Fonts link in each page).
-   ===================================================== */
-
 :root {
   --bg: #130a14;
   --bg-2: #1b101c;
