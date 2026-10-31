@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraBlend - Create & Formulate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body class="min-h-screen flex flex-col justify-between p-3 md:p-6 text-slate-800 bg-[#faf7f7]">
+
+  <div class="max-w-[1400px] w-full mx-auto space-y-5">
+    
+    <!-- HEADER BAR -->
+    <header class="flex flex-wrap items-center justify-between gap-4 bg-white px-5 py-3.5 rounded-2xl border border-rose-100 shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-500 via-pink-500 to-amber-400 p-0.5 flex items-center justify-center shadow-md shadow-rose-500/10">
+          <div class="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
+            <i class="fa-solid fa-wand-magic-sparkles text-rose-500 text-lg"></i>
+          </div>
+        </div>
+        <div>
+          <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-rose-600 via-pink-600 to-amber-600 bg-clip-text text-transparent">AuraBlend</span>
+          <p class="text-[10px] font-bold tracking-wider text-slate-400 uppercase">AI IoT LIPSTICK FORMULATOR</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2.5 bg-rose-50/60 px-4 py-1.5 rounded-full border border-rose-100 text-xs font-medium">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]"></span>
+        <span class="text-slate-600">IoT Device: <span class="text-emerald-600 font-semibold">Ready (Aura-x1)</span></span>
+      </div>
+    </header>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="bg-white px-4 py-2.5 rounded-xl border border-rose-100 shadow-sm flex items-center justify-between overflow-x-auto">
+      <div class="flex items-center gap-2">
+        <a href="index.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="matchine.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-microchip text-amber-500"></i> Matchine</a>
+        <a href="ideas.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-lightbulb text-amber-500"></i> Ideas</a>
+        <a href="compare.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-code-compare text-rose-400"></i> Compare</a>
+        <a href="saved.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-bookmark text-pink-500"></i> Saved</a>
+        <a href="create.html" class="px-4 py-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold flex items-center gap-2 transition"><i class="fa-solid fa-circle-plus text-emerald-500"></i> Create</a>
+      </div>
+
+      <!-- Account Button -->
+      <div id="user-profile-badge" class="flex items-center gap-2">
+        <a href="auth.html" id="auth-link" class="px-4 py-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold flex items-center gap-2 transition">
+          <i class="fa-solid fa-user"></i> <span id="nav-username">Sign In</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- CREATE PAGE: IMAGE ANALYSIS & STUDIO -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+
+      <!-- SECTION 1: IMAGE ANALYSIS & PIN DROPPING -->
+      <section class="lg:col-span-5 bg-white rounded-2xl border border-rose-100 p-5 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-lg font-bold flex items-center gap-2 text-slate-900">
+              <i class="fa-solid fa-camera text-rose-500"></i> 1. Image Color Analysis
+            </h2>
+            <div class="flex bg-rose-50/60 p-1 rounded-xl border border-rose-100 text-xs font-semibold">
+              <button id="btn-mode-cam" onclick="setMode('cam')" class="px-3 py-1.5 rounded-lg bg-white text-rose-600 shadow-xs flex items-center gap-1.5 transition font-bold"><i class="fa-solid fa-video text-rose-500"></i> Live Cam</button>
+              <button id="btn-mode-upload" onclick="setMode('upload')" class="px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition"><i class="fa-solid fa-upload text-slate-400"></i> Upload</button>
+            </div>
+          </div>
+
+          <!-- Pin placement mode selector (Visible only in upload mode) -->
+          <div id="pin-mode-toolbar" class="hidden mb-3 bg-rose-50/80 p-2 rounded-xl border border-rose-200 flex items-center justify-between text-xs">
+            <span class="text-slate-700 font-bold px-1">Active Pin Target:</span>
+            <div class="flex gap-1.5">
+              <button id="btn-target-skin" onclick="setActivePinTarget('skin')" class="px-3 py-1.5 rounded-lg bg-rose-500 text-white font-bold shadow-xs transition">Skin Pin</button>
+              <button id="btn-target-outfit" onclick="setActivePinTarget('outfit')" class="px-3 py-1.5 rounded-lg bg-white text-slate-700 hover:bg-slate-100 font-semibold transition border border-rose-200">Outfit Pin</button>
+            </div>
+          </div>
+
+          <!-- Image Container with Click-to-Drop Pins -->
+          <div id="image-container" onclick="handleImageClick(event)" class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-slate-900 border border-rose-100 flex items-center justify-center cursor-crosshair">
+            <video id="webcam" autoplay playsinline class="w-full h-full object-cover hidden"></video>
+            <img id="upload-preview" class="w-full h-full object-cover hidden" alt="Uploaded target" />
+            
+            <!-- Live visual Pins -->
+            <div id="pin-skin" class="analysis-pin bg-pink-500 hidden" style="left: 40%; top: 35%;">SKIN</div>
+            <div id="pin-outfit" class="analysis-pin bg-rose-700 hidden" style="left: 50%; top: 75%;">OUTFIT</div>
+
+            <div id="cam-overlay-guide" class="absolute inset-3 rounded-xl p-3 flex flex-col justify-between pointer-events-none">
+              <div class="flex justify-between text-[11px] font-bold text-rose-400 tracking-wider">
+                <span>[SKIN ZONE]</span>
+                <span>[OUTFIT ZONE]</span>
+              </div>
+              <div class="mx-auto w-44 h-56 border-2 border-amber-400/80 rounded-[50%] flex items-center justify-center relative shadow-[0_0_15px_rgba(251,191,36,0.2)]">
+                <span class="text-xs font-semibold text-amber-900 bg-amber-100/90 px-2.5 py-1 rounded-full border border-amber-300">Center Face</span>
+              </div>
+              <p class="text-center text-[11px] text-slate-200 font-medium pb-1 drop-shadow">Click on uploaded image to drop pins</p>
+            </div>
+            
+            <input type="file" id="file-input" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
+            <canvas id="processCanvas" class="hidden"></canvas>
+          </div>
+        </div>
+
+        <div class="mt-4 space-y-3">
+          <button onclick="runAiAnalysis()" class="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:brightness-105 text-white font-bold py-3.5 px-4 rounded-xl shadow-md shadow-rose-500/15 flex items-center justify-center gap-2 transition">
+            <i class="fa-solid fa-wand-magic-sparkles text-amber-200"></i> Auto Scan & Formulate Match
+          </button>
+
+          <!-- Skin & Outfit Detected Swatches -->
+          <div class="bg-rose-50/40 p-3 rounded-xl border border-rose-100 flex items-center justify-around gap-2">
+            <div class="flex items-center gap-2.5">
+              <div id="skin-swatch" class="w-8 h-8 rounded-full border border-rose-200 bg-white shadow-xs"></div>
+              <div>
+                <p class="text-[10px] text-slate-500 font-bold uppercase">Skin Color</p>
+                <p id="skin-hex" class="text-xs font-mono font-semibold text-slate-800">#------</p>
+              </div>
+            </div>
+            <div class="w-[1px] h-8 bg-rose-200"></div>
+            <div class="flex items-center gap-2.5">
+              <div id="outfit-swatch" class="w-8 h-8 rounded-full border border-rose-200 bg-white shadow-xs"></div>
+              <div>
+                <p class="text-[10px] text-slate-500 font-bold uppercase">Outfit Color</p>
+                <p id="outfit-hex" class="text-xs font-mono font-semibold text-slate-800">#------</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: BESPOKE COLOR FORMULATION STUDIO -->
+      <section class="lg:col-span-7 bg-white rounded-2xl border border-rose-100 p-5 flex flex-col justify-between shadow-sm">
+        <div>
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900">2. Bespoke Color Formulation Studio</h2>
+              <p class="text-xs text-slate-500">Real-time shade simulation & pigment adjustment</p>
+            </div>
+            <div class="flex items-center gap-2 bg-rose-50/60 px-3 py-1.5 rounded-xl border border-rose-100">
+              <span class="text-xs text-slate-600 font-medium">Finish:</span>
+              <select id="finish-select" onchange="updateStudio()" class="bg-transparent text-xs font-semibold text-slate-800 focus:outline-none cursor-pointer">
+                <option value="satin" class="bg-white">Satin Glow</option>
+                <option value="matte" class="bg-white">Matte Velvet</option>
+                <option value="gloss" class="bg-white">High Gloss</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center mt-2">
+            <div class="md:col-span-5 flex flex-col items-center justify-center">
+              <div class="relative w-52 h-52 rounded-full bg-gradient-to-b from-rose-50 to-white p-3 flex items-center justify-center border border-rose-100 shadow-md">
+                <canvas id="lipCanvas" width="200" height="200" class="w-full h-full"></canvas>
+              </div>
+              <div class="text-center mt-3">
+                <h3 id="shade-name" class="font-bold text-base text-rose-600 tracking-wide">Royal Velvet Crimson</h3>
+                <p id="shade-hex" class="text-xs font-mono font-medium text-slate-500 mt-0.5">#9B111E</p>
+              </div>
+            </div>
+
+            <div class="md:col-span-7 bg-rose-50/40 p-4 rounded-xl border border-rose-100 space-y-4">
+              <div class="flex items-center justify-between border-b border-rose-200/60 pb-2">
+                <span class="text-xs font-bold text-slate-700">Pigment Ratio (3-Liquid Cartridges)</span>
+                <button onclick="resetSliders()" class="text-xs text-rose-600 hover:text-rose-700 font-bold"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs font-semibold"><span class="text-pink-600">Pink Pigment</span><span id="val-pink" class="text-slate-700 font-mono font-bold">30%</span></div>
+                <input type="range" id="slider-pink" min="0" max="100" value="30" oninput="updateStudio()" class="w-full accent-pink-500">
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs font-semibold"><span class="text-rose-600">Red Pigment</span><span id="val-red" class="text-slate-700 font-mono font-bold">70%</span></div>
+                <input type="range" id="slider-red" min="0" max="100" value="70" oninput="updateStudio()" class="w-full accent-red-600">
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs font-semibold"><span class="text-amber-700">Brown Pigment</span><span id="val-brown" class="text-slate-700 font-mono font-bold">40%</span></div>
+                <input type="range" id="slider-brown" min="0" max="100" value="40" oninput="updateStudio()" class="w-full accent-amber-700">
+              </div>
+
+              <div class="flex gap-3 pt-2">
+                <button onclick="triggerDispense()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:brightness-105 text-slate-950 text-xs font-bold py-3 rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-bolt"></i> Instant Dispense Formula
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Row -->
+        <div class="grid grid-cols-2 gap-3 pt-4 border-t border-rose-100 mt-4">
+          <button onclick="redirectToTryOn()" class="bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-xs font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition">
+            <i class="fa-solid fa-face-smile text-rose-500"></i> Virtual Try-On
+          </button>
+          <button onclick="triggerDispense()" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:brightness-105 text-white text-xs font-bold py-3.5 rounded-xl shadow-md transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-bolt"></i> Instant Dispense
+          </button>
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+
+  <!-- SCRIPT FOR CREATE PAGE & PIN DROPPING -->
+  <!-- SCRIPT FOR CREATE PAGE -->
+  <script>
+    let webcamStream = null;
+    let activeMode = 'cam';
+    let activePinTarget = 'skin'; // 'skin' or 'outfit'
+    let skinColorHex = '#D4A373';
+    let outfitColorHex = '#9B111E';
+
+    const shadeNames = {
+      crimson: ["Imperial Scarlet", "Deep Berry Red", "Royal Velvet Crimson", "Bespoke Ruby"],
+      pink: ["Satin Rose Pink", "Blush Petal Pink", "Neon Peony", "Sunset Mauve"],
+      brown: ["Warm Mochaccino", "Terracotta Nude", "Spiced Cocoa", "Caramel Latte"],
+      balanced: ["Harmony Rosewood", "Aura Custom Blend", "Cashmere Neutral", "Velvet Mauve"]
+    };
+
+    window.onload = function() { setMode('cam'); updateStudio(); };
+
+    function setMode(mode) {
+      activeMode = mode;
+      const btnCam = document.getElementById('btn-mode-cam');
+      const btnUpload = document.getElementById('btn-mode-upload');
+      const uploadPreview = document.getElementById('upload-preview');
+      const fileInput = document.getElementById('file-input');
+      const pinModeToolbar = document.getElementById('pin-mode-toolbar');
+      const camOverlayGuide = document.getElementById('cam-overlay-guide');
+      const pinSkin = document.getElementById('pin-skin');
+      const pinOutfit = document.getElementById('pin-outfit');
+
+      if (mode === 'cam') {
+        btnCam.className = "px-3 py-1.5 rounded-lg bg-white text-rose-600 shadow-xs flex items-center gap-1.5 transition font-bold";
+        btnUpload.className = "px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition";
+        uploadPreview.classList.add('hidden');
+        pinModeToolbar.classList.add('hidden');
+        camOverlayGuide.classList.remove('hidden');
+        pinSkin.classList.add('hidden');
+        pinOutfit.classList.add('hidden');
+        startCamera();
+      } else {
+        btnUpload.className = "px-3 py-1.5 rounded-lg bg-white text-rose-600 shadow-xs flex items-center gap-1.5 transition font-bold";
+        btnCam.className = "px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition";
+        stopCamera();
+        pinModeToolbar.classList.remove('hidden');
+        camOverlayGuide.classList.add('hidden');
+        pinSkin.classList.remove('hidden');
+        pinOutfit.classList.remove('hidden');
+        if(!uploadPreview.src || uploadPreview.src === "") fileInput.click();
+        else uploadPreview.classList.remove('hidden');
+      }
+    }
+
+    async function startCamera() {
+      const webcam = document.getElementById('webcam');
+      try {
+        webcamStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+        webcam.srcObject = webcamStream;
+        webcam.classList.remove('hidden');
+      } catch (err) { console.log("Camera unavailable"); }
+    }
+
+    function stopCamera() {
+      if (webcamStream) { webcamStream.getTracks().forEach(t => t.stop()); webcamStream = null; }
+      document.getElementById('webcam').classList.add('hidden');
+    }
+
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.getElementById('upload-preview');
+          img.src = e.target.result;
+          img.classList.remove('hidden');
+          stopCamera();
+          setTimeout(runAiAnalysis, 300);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function setActivePinTarget(target) {
+      activePinTarget = target;
+      const btnSkin = document.getElementById('btn-target-skin');
+      const btnOutfit = document.getElementById('btn-target-outfit');
+
+      if (target === 'skin') {
+        btnSkin.className = "px-3 py-1.5 rounded-lg bg-rose-500 text-white font-bold shadow-xs transition";
+        btnOutfit.className = "px-3 py-1.5 rounded-lg bg-white text-slate-700 hover:bg-slate-100 font-semibold transition border border-rose-200";
+      } else {
+        btnOutfit.className = "px-3 py-1.5 rounded-lg bg-rose-700 text-white font-bold shadow-xs transition";
+        btnSkin.className = "px-3 py-1.5 rounded-lg bg-white text-slate-700 hover:bg-slate-100 font-semibold transition border border-rose-200";
+      }
+    }
+
+    // Fixed click tracking for pins
+    function handleImageClick(event) {
+      if (activeMode !== 'upload') return;
+      const container = document.getElementById('image-container');
+      const rect = container.getBoundingClientRect();
+      
+      const xClick = event.clientX - rect.left;
+      const yClick = event.clientY - rect.top;
+
+      const xPercent = (xClick / rect.width) * 100;
+      const yPercent = (yClick / rect.height) * 100;
+
+      const pinElem = document.getElementById(activePinTarget === 'skin' ? 'pin-skin' : 'pin-outfit');
+      pinElem.style.left = xPercent + '%';
+      pinElem.style.top = yPercent + '%';
+
+      sampleColorAtPoint(xClick, yClick, rect.width, rect.height, activePinTarget);
+    }
+
+    function sampleColorAtPoint(clientX, clientY, displayW, displayH, targetType) {
+      const processCanvas = document.getElementById('processCanvas');
+      const ctx = processCanvas.getContext('2d');
+      const uploadImg = document.getElementById('upload-preview');
+
+      if (!uploadImg.src) return;
+
+      processCanvas.width = uploadImg.naturalWidth || 640;
+      processCanvas.height = uploadImg.naturalHeight || 480;
+      ctx.drawImage(uploadImg, 0, 0, processCanvas.width, processCanvas.height);
+
+      const scaleX = processCanvas.width / displayW;
+      const scaleY = processCanvas.height / displayH;
+
+      const naturalX = Math.floor(clientX * scaleX);
+      const naturalY = Math.floor(clientY * scaleY);
+
+      const pixelData = ctx.getImageData(naturalX, naturalY, 1, 1).data;
+      const hex = rgbToHex(pixelData[0], pixelData[1], pixelData[2]);
+
+      if (targetType === 'skin') {
+        skinColorHex = hex;
+        document.getElementById('skin-swatch').style.backgroundColor = hex;
+        document.getElementById('skin-hex').textContent = hex;
+      } else {
+        outfitColorHex = hex;
+        document.getElementById('outfit-swatch').style.backgroundColor = hex;
+        document.getElementById('outfit-hex').textContent = hex;
+      }
+
+      calculateFormulaFromSwatches();
+    }
+function runAiAnalysis() {
+      const processCanvas = document.getElementById('processCanvas');
+      const ctx = processCanvas.getContext('2d');
+      let sourceElem = activeMode === 'cam' ? document.getElementById('webcam') : document.getElementById('upload-preview');
+      
+      processCanvas.width = sourceElem.videoWidth || sourceElem.naturalWidth || 640;
+      processCanvas.height = sourceElem.videoHeight || sourceElem.naturalHeight || 480;
+      ctx.drawImage(sourceElem, 0, 0, processCanvas.width, processCanvas.height);
+
+      setTimeout(() => {
+        const skinData = ctx.getImageData(processCanvas.width * 0.4, processCanvas.height * 0.3, 20, 20).data;
+        const outfitData = ctx.getImageData(processCanvas.width * 0.3, processCanvas.height * 0.75, 40, 40).data;
+
+        skinColorHex = rgbToHex(skinData[0], skinData[1], skinData[2]);
+        outfitColorHex = rgbToHex(outfitData[0], outfitData[1], outfitData[2]);
+
+        document.getElementById('skin-swatch').style.backgroundColor = skinColorHex;
+        document.getElementById('skin-hex').textContent = skinColorHex;
+        document.getElementById('outfit-swatch').style.backgroundColor = outfitColorHex;
+        document.getElementById('outfit-hex').textContent = outfitColorHex;
+
+        if (activeMode === 'upload') {
+          document.getElementById('pin-skin').style.left = '40%';
+          document.getElementById('pin-skin').style.top = '30%';
+          document.getElementById('pin-outfit').style.left = '30%';
+          document.getElementById('pin-outfit').style.top = '75%';
+        }
+
+        calculateFormulaFromSwatches();
+        
+        // ---> ADD THIS LINE SO THE LIP CANVAS UPDATES LIVE INSTANTLY <---
+        updateStudio();
+      }, 400);
+    }
+    function calculateFormulaFromSwatches() {
+      let rHex = parseInt(outfitColorHex.slice(1,3), 16);
+      let gHex = parseInt(outfitColorHex.slice(3,5), 16);
+      let bHex = parseInt(outfitColorHex.slice(5,7), 16);
+
+      let pinkVal = Math.min(80, Math.max(20, Math.round((bHex / 255) * 50 + 20)));
+      let redVal = Math.min(85, Math.max(30, Math.round((rHex / 255) * 60 + 20)));
+      let brownVal = Math.max(10, 100 - pinkVal - redVal);
+
+      document.getElementById('slider-pink').value = pinkVal;
+      document.getElementById('slider-red').value = redVal;
+      document.getElementById('slider-brown').value = brownVal;
+
+      updateStudio();
+    }
+
+    function rgbToHex(r, g, b) {
+      return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`;
+    }
+
+    function updateStudio() {
+      const p = parseInt(document.getElementById('slider-pink').value);
+      const r = parseInt(document.getElementById('slider-red').value);
+      const b = parseInt(document.getElementById('slider-brown').value);
+
+      document.getElementById('val-pink').textContent = p + "%";
+      document.getElementById('val-red').textContent = r + "%";
+      document.getElementById('val-brown').textContent = b + "%";
+
+      let redComp = (r * 2.2) + (p * 1.5) + (b * 1.1);
+      let greenComp = (p * 0.35) + (b * 0.45);
+      let blueComp = (p * 0.75) + (b * 0.15);
+
+      const finalR = Math.min(255, Math.max(20, Math.floor(redComp)));
+      const finalG = Math.min(255, Math.max(10, Math.floor(greenComp)));
+      const finalB = Math.min(255, Math.max(10, Math.floor(blueComp)));
+
+      const hex = rgbToHex(finalR, finalG, finalB);
+      document.getElementById('shade-hex').textContent = hex;
+
+      let matchedName = "Aura Custom Blend";
+      if (r >= p && r >= b) {
+        matchedName = shadeNames.crimson[r % shadeNames.crimson.length];
+      } else if (p >= r && p >= b) {
+        matchedName = shadeNames.pink[p % shadeNames.pink.length];
+      } else if (b >= r && b >= p) {
+        matchedName = shadeNames.brown[b % shadeNames.brown.length];
+      } else {
+        matchedName = shadeNames.balanced[0];
+      }
+
+      document.getElementById('shade-name').textContent = matchedName;
+      drawLipsCanvas(hex, document.getElementById('finish-select').value);
+    }
+
+    function drawLipsCanvas(hexColor, finish) {
+      const canvas = document.getElementById('lipCanvas');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.save();
+      ctx.translate(100, 100);
+
+      const radialGlow = ctx.createRadialGradient(0, 0, 10, 0, 0, 95);
+      radialGlow.addColorStop(0, hexColor);
+      radialGlow.addColorStop(0.85, hexColor);
+      radialGlow.addColorStop(1, '#fbcfe8');
+
+      ctx.fillStyle = radialGlow;
+      ctx.beginPath();
+      ctx.arc(0, 0, 90, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = hexColor;
+      ctx.beginPath();
+      ctx.moveTo(-60, 0);
+      ctx.bezierCurveTo(-35, -45, -15, -40, 0, -20);
+      ctx.bezierCurveTo(15, -40, 35, -45, 60, 0);
+      ctx.bezierCurveTo(35, -5, 15, -2, 0, -8);
+      ctx.bezierCurveTo(-15, -2, -35, -5, -60, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(-60, 0);
+      ctx.bezierCurveTo(-35, 45, 35, 45, 60, 0);
+      ctx.bezierCurveTo(35, 5, 15, 8, 0, -2);
+      ctx.bezierCurveTo(-15, 8, -35, 5, -60, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function resetSliders() {
+      document.getElementById('slider-pink').value = 30;
+      document.getElementById('slider-red').value = 70;
+      document.getElementById('slider-brown').value = 40;
+      updateStudio();
+    }
+
+    function triggerDispense() {
+      const hex = document.getElementById('shade-hex').textContent;
+      const name = document.getElementById('shade-name').textContent;
+      window.location.href = `matchine.html?hex=${encodeURIComponent(hex)}&name=${encodeURIComponent(name)}`;
+    }
+
+    function redirectToTryOn() {
+      const hex = document.getElementById('shade-hex').textContent;
+      const name = document.getElementById('shade-name').textContent;
+      window.location.href = `tryon.html?hex=${encodeURIComponent(hex)}&name=${encodeURIComponent(name)}`;
+    }
+  </script>
+</body>
+</html>

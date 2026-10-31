@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraBlend - Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex flex-col justify-between p-3 md:p-6 text-slate-800 bg-[#faf7f7]">
+
+  <!-- TOP CONTAINER -->
+  <div class="max-w-[1400px] w-full mx-auto space-y-5">
+    
+    <!-- HEADER BAR -->
+    <header class="flex flex-wrap items-center justify-between gap-4 bg-white px-5 py-3.5 rounded-2xl border border-rose-100 shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-500 via-pink-500 to-amber-400 p-0.5 flex items-center justify-center shadow-md shadow-rose-500/10">
+          <div class="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
+            <i class="fa-solid fa-wand-magic-sparkles text-rose-500 text-lg"></i>
+          </div>
+        </div>
+        <div>
+          <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-rose-600 via-pink-600 to-amber-600 bg-clip-text text-transparent">AuraBlend</span>
+          <p class="text-[10px] font-bold tracking-wider text-slate-400 uppercase">AI IoT LIPSTICK FORMULATOR</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2.5 bg-rose-50/60 px-4 py-1.5 rounded-full border border-rose-100 text-xs font-medium">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]"></span>
+        <span class="text-slate-600">IoT Device: <span class="text-emerald-600 font-semibold">Ready (Aura-x1)</span></span>
+      </div>
+    </header>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="bg-white px-4 py-2.5 rounded-xl border border-rose-100 shadow-sm flex items-center justify-between overflow-x-auto">
+      <div class="flex items-center gap-2">
+        <a href="index.html" class="px-4 py-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold flex items-center gap-2 transition"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="matchine.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-microchip text-amber-500"></i> Matchine</a>
+        <a href="ideas.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-lightbulb text-amber-500"></i> Ideas</a>
+        <a href="compare.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-code-compare text-rose-400"></i> Compare</a>
+        <a href="saved.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-bookmark text-pink-500"></i> Saved</a>
+        <a href="create.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-circle-plus text-emerald-500"></i> Create</a>
+        <a href="tryon.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-face-smile text-rose-500"></i> Try On</a>
+      </div>
+
+      <!-- Account Button -->
+      <div id="user-profile-badge" class="flex items-center gap-2">
+        <a href="auth.html" id="auth-link" class="px-4 py-2 rounded-lg bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold flex items-center gap-2 transition shadow-sm">
+          <i class="fa-solid fa-user"></i> <span id="nav-username">Sign In</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- MAIN LIGHT HOME CONTENT -->
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center bg-white border border-rose-100 rounded-2xl p-8 shadow-sm">
+      <div class="lg:col-span-7 space-y-4">
+        <span class="bg-rose-100/70 text-rose-600 border border-rose-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Next-Gen Beauty IoT</span>
+        <h1 class="text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
+          Where Skin Undertones Meet Outfit Harmony in <span class="bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent">Instant Pigment Blends</span>
+        </h1>
+        <p class="text-sm text-slate-600 leading-relaxed">
+          <strong>AuraBlend</strong> is an advanced AI-powered IoT lipstick formulator that bridges computer vision with customized cosmetics. By scanning your facial skin undertone and clothing color spectrum, our system calculates and dispenses the exact matching pigment combination using pure Pink, Red, and Brown liquid cartridges.
+        </p>
+        <div class="flex gap-4 pt-2">
+          <a href="create.html" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:brightness-105 text-white font-bold text-xs px-6 py-3 rounded-xl shadow-md shadow-rose-500/15 transition flex items-center gap-2">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Start Creating Now
+          </a>
+          <a href="matchine.html" class="bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 font-bold text-xs px-6 py-3 rounded-xl transition flex items-center gap-2">
+            <i class="fa-solid fa-microchip text-amber-600"></i> View Hardware
+          </a>
+        </div>
+      </div>
+
+      <!-- Mixed Shades Showcase Grid -->
+      <div class="lg:col-span-5 bg-rose-50/40 p-5 rounded-2xl border border-rose-100 space-y-3">
+        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Signature Red • Pink • Brown Harmonies</h3>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="p-3 bg-white rounded-xl border border-rose-100 text-center space-y-1 shadow-xs">
+            <div class="w-full h-12 rounded-lg bg-[#9B111E] shadow-sm"></div>
+            <p class="text-xs font-bold text-slate-800">Royal Crimson</p>
+            <p class="text-[10px] font-mono text-slate-500">Red 70% / Brown 30%</p>
+          </div>
+          <div class="p-3 bg-white rounded-xl border border-rose-100 text-center space-y-1 shadow-xs">
+            <div class="w-full h-12 rounded-lg bg-[#D85A7E] shadow-sm"></div>
+            <p class="text-xs font-bold text-slate-800">Satin Rose</p>
+            <p class="text-[10px] font-mono text-slate-500">Pink 60% / Red 40%</p>
+          </div>
+          <div class="p-3 bg-white rounded-xl border border-rose-100 text-center space-y-1 shadow-xs">
+            <div class="w-full h-12 rounded-lg bg-[#8D4A38] shadow-sm"></div>
+            <p class="text-xs font-bold text-slate-800">Warm Cocoa</p>
+            <p class="text-[10px] font-mono text-slate-500">Brown 65% / Red 35%</p>
+          </div>
+          <div class="p-3 bg-white rounded-xl border border-rose-100 text-center space-y-1 shadow-xs">
+            <div class="w-full h-12 rounded-lg bg-[#C4526B] shadow-sm"></div>
+            <p class="text-xs font-bold text-slate-800">Blush Mauve</p>
+            <p class="text-[10px] font-mono text-slate-500">Pink 50% / Red 50%</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- STEP 3 LOGIN SCRIPT -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedUser = localStorage.getItem('aurablend_user');
+      const authLink = document.getElementById('auth-link');
+      
+      if (savedUser && authLink) {
+        authLink.innerHTML = `<i class="fa-solid fa-user-check text-emerald-500"></i> Hello, <span class="text-slate-900 font-extrabold">${savedUser}</span>`;
+        authLink.href = "#";
+        authLink.className = "px-4 py-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold flex items-center gap-2 transition";
+        authLink.title = "Click to Log Out";
+        
+        authLink.onclick = function(e) {
+          e.preventDefault();
+          if (confirm("Do you want to log out of AuraBlend?")) {
+            localStorage.removeItem('aurablend_user');
+            window.location.reload();
+          }
+        };
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraBlend - Virtual Lipstick Try-On</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    #tryon-container {
+        position: relative;
+    }
+    #tryon-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    #webcam, #uploaded-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    #webcam {
+        transform: scaleX(-1);
+    }
+    /* Clickable Lip Target Pin */
+    #lip-target-pin {
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 2px solid white;
+        background: rgba(244, 63, 94, 0.85);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 11px;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        transition: transform 0.1s ease;
+        z-index: 20;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-3 md:p-6 text-slate-800 bg-[#faf7f7]">
+
+  <div class="max-w-[1400px] w-full mx-auto space-y-5">
+    
+    <!-- HEADER BAR -->
+    <header class="flex flex-wrap items-center justify-between gap-4 bg-white px-5 py-3.5 rounded-2xl border border-rose-100 shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-500 via-pink-500 to-amber-400 p-0.5 flex items-center justify-center shadow-md shadow-rose-500/10">
+          <div class="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
+            <i class="fa-solid fa-wand-magic-sparkles text-rose-500 text-lg"></i>
+          </div>
+        </div>
+        <div>
+          <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-rose-600 via-pink-600 to-amber-600 bg-clip-text text-transparent">AuraBlend</span>
+          <p class="text-[10px] font-bold tracking-wider text-slate-400 uppercase">AI IoT LIPSTICK FORMULATOR</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2.5 bg-rose-50/60 px-4 py-1.5 rounded-full border border-rose-100 text-xs font-medium">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]"></span>
+        <span class="text-slate-600">IoT Device: <span class="text-emerald-600 font-semibold">Ready (Aura-x1)</span></span>
+      </div>
+    </header>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="bg-white px-4 py-2.5 rounded-xl border border-rose-100 shadow-sm flex items-center justify-between overflow-x-auto">
+      <div class="flex items-center gap-2">
+        <a href="index.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="matchine.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-microchip text-amber-500"></i> Matchine</a>
+        <a href="ideas.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-lightbulb text-amber-500"></i> Ideas</a>
+        <a href="compare.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-code-compare text-rose-400"></i> Compare</a>
+        <a href="saved.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-bookmark text-pink-500"></i> Saved</a>
+        <a href="create.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-circle-plus text-emerald-500"></i> Create</a>
+      </div>
+
+      <!-- Account Button -->
+      <div id="user-profile-badge" class="flex items-center gap-2">
+        <a href="auth.html" id="auth-link" class="px-4 py-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold flex items-center gap-2 transition">
+          <i class="fa-solid fa-user"></i> <span id="nav-username">Sign In</span>
+        </a>
+      </div>
+    </nav>
+    <!-- Size & Rotation Adjuster Toolbar -->
+          <div class="bg-rose-50/60 p-3 rounded-xl border border-rose-100 grid grid-cols-2 gap-3 text-xs mt-3">
+            <div class="flex items-center justify-between">
+              <span class="text-slate-700 font-bold">Size:</span>
+              <div class="flex gap-1.5">
+                <button onclick="adjustLipScale(-0.15)" class="px-2.5 py-1 bg-white hover:bg-rose-50 border border-rose-200 text-slate-800 font-bold rounded-lg shadow-xs">-</button>
+                <button onclick="adjustLipScale(0.15)" class="px-2.5 py-1 bg-white hover:bg-rose-50 border border-rose-200 text-slate-800 font-bold rounded-lg shadow-xs">+</button>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-slate-700 font-bold">Rotate:</span>
+              <div class="flex gap-1.5">
+                <button onclick="adjustLipRotation(-10)" class="px-2.5 py-1 bg-white hover:bg-rose-50 border border-rose-200 text-slate-800 font-bold rounded-lg shadow-xs">↺</button>
+                <button onclick="adjustLipRotation(10)" class="px-2.5 py-1 bg-white hover:bg-rose-50 border border-rose-200 text-slate-800 font-bold rounded-lg shadow-xs">↻</button>
+              </div>
+            </div>
+          </div>
+
+    <!-- TRY-ON VIEW -->
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      
+      <!-- Left: Viewport with Clickable Lip Positioning -->
+      <section class="lg:col-span-8 bg-white rounded-2xl border border-rose-100 p-4 shadow-sm flex flex-col justify-between">
+        <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+            <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-face-smile text-rose-500"></i> Virtual Shade Try-On
+            </h2>
+            
+            <div class="flex bg-rose-50/60 p-1 rounded-xl border border-rose-100 text-xs font-semibold">
+              <button id="btn-try-cam" onclick="setTryOnMode('cam')" class="px-3 py-1.5 rounded-lg bg-white text-rose-600 shadow-xs flex items-center gap-1.5 transition font-bold"><i class="fa-solid fa-video"></i> Live Cam</button>
+              <button id="btn-try-upload" onclick="setTryOnMode('upload')" class="px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition"><i class="fa-solid fa-image"></i> Upload Photo</button>
+            </div>
+        </div>
+
+        <!-- Clickable Container -->
+        <div id="tryon-container" onclick="handleTryOnClick(event)" class="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-slate-900 border border-rose-100 flex items-center justify-center cursor-crosshair">
+            <video id="webcam" autoplay playsinline></video>
+            <img id="uploaded-photo" class="hidden" alt="Customer portrait" />
+            <canvas id="tryon-canvas"></canvas>
+
+            <!-- Movable Pin showing where the lipstick is rendered -->
+            <div id="lip-target-pin">
+              <i class="fa-solid fa-bullseye"></i>
+            </div>
+
+            <div id="instruction-banner" class="absolute bottom-2 bg-slate-900/80 text-rose-200 px-3 py-1.5 rounded-lg text-[11px] font-semibold border border-rose-500/30 pointer-events-none">
+              💡 Tip: Click anywhere on your lips in the photo to align the shade!
+            </div>
+
+            <input type="file" id="tryon-file-input" accept="image/*" class="hidden" onchange="handleTryonPhotoUpload(event)">
+        </div>
+      </section>
+
+      <!-- Right: Active Formula Info & Controls -->
+      <section class="lg:col-span-4 bg-white rounded-2xl border border-rose-100 p-5 shadow-sm flex flex-col justify-between">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 flex items-center gap-2 mb-4">
+            <i class="fa-solid fa-palette text-rose-500"></i> Active Custom Formula
+          </h2>
+          
+          <div id="target-display" class="bg-rose-50/40 p-4 rounded-xl border border-rose-100 text-center space-y-3 mb-5">
+            <div id="target-color-box" class="w-16 h-16 mx-auto rounded-full shadow-md border-2 border-rose-200 bg-rose-600 transition-all duration-300"></div>
+            <div>
+              <h3 id="target-name" class="text-sm font-bold text-slate-900">Royal Velvet Crimson</h3>
+              <p id="target-hex" class="text-xs font-mono text-slate-500">#9B111E</p>
+            </div>
+          </div>
+
+          <p class="text-[11px] text-slate-600 leading-relaxed bg-rose-50/50 p-3 rounded-lg border border-rose-100">
+            Upload your photo and click directly on your lips to instantly see your custom formulation applied with realistic gloss and satin sheen!
+          </p>
+        </div>
+
+        <div class="pt-4 space-y-3">
+          <button onclick="window.location.href='create.html'" class="w-full bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 font-bold text-xs py-3.5 rounded-xl transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-arrow-left"></i> Back to Studio
+          </button>
+          <button onclick="goToDispense()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:brightness-105 text-slate-950 font-bold text-xs py-3.5 rounded-xl shadow-xs transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-bolt"></i> Satisfied? Instant Dispense
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- VIRTUAL TRY-ON SCRIPT -->
+  <!-- VIRTUAL TRY-ON SCRIPT -->
+  <script>
+    let activeHexColor = '#9B111E';
+    let webcamStream = null;
+    let tryonMode = 'cam';
+    let lipCoordX = 50; // percentage
+    let lipCoordY = 62; // percentage
+    let lipScale = 1.2;  // Scale size
+    let lipAngle = 15;   // Rotation angle in degrees (adjusted for tilted face)
+
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const hex = urlParams.get('hex');
+      const name = urlParams.get('name');
+
+      if (hex && name) {
+        activeHexColor = hex;
+        document.getElementById('target-hex').textContent = hex;
+        document.getElementById('target-name').textContent = name;
+        document.getElementById('target-color-box').style.backgroundColor = hex;
+      }
+
+      setTryOnMode('cam');
+    };
+
+    function setTryOnMode(mode) {
+      tryonMode = mode;
+      const btnCam = document.getElementById('btn-try-cam');
+      const btnUpload = document.getElementById('btn-try-upload');
+      const webcam = document.getElementById('webcam');
+      const uploadedPhoto = document.getElementById('uploaded-photo');
+      const fileInput = document.getElementById('tryon-file-input');
+      const pin = document.getElementById('lip-target-pin');
+
+      if (pin) pin.style.display = 'none'; // Ensure target pin is never shown
+
+      if (mode === 'cam') {
+        btnCam.className = "px-3 py-1.5 rounded-lg bg-white text-rose-600 shadow-xs flex items-center gap-1.5 transition font-bold";
+        btnUpload.className = "px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition";
+        uploadedPhoto.classList.add('hidden');
+        webcam.classList.remove('hidden');
+        stopWebcamStream();
+        startCamera();
+      } else {
+        btnUpload.className = "px-3 py-1.5 rounded-lg bg-white text-rose-600 shadow-xs flex items-center gap-1.5 transition font-bold";
+        btnCam.className = "px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition";
+        stopWebcamStream();
+        webcam.classList.add('hidden');
+
+        if (!uploadedPhoto.src || uploadedPhoto.src === "") {
+          fileInput.click();
+        } else {
+          uploadedPhoto.classList.remove('hidden');
+          renderStaticFilter();
+        }
+      }
+    }
+
+    async function startCamera() {
+      const webcam = document.getElementById('webcam');
+      try {
+        webcamStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+        webcam.srcObject = webcamStream;
+        await new Promise(resolve => webcam.onloadedmetadata = resolve);
+        startLiveRenderLoop();
+      } catch (err) {
+        console.log("Webcam access error:", err);
+      }
+    }
+
+    function stopWebcamStream() {
+      if (webcamStream) {
+        webcamStream.getTracks().forEach(t => t.stop());
+        webcamStream = null;
+      }
+    }
+
+    function handleTryonPhotoUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.getElementById('uploaded-photo');
+          img.src = e.target.result;
+          img.classList.remove('hidden');
+          
+          lipCoordX = 50;
+          lipCoordY = 62;
+          lipScale = 1.2;
+          lipAngle = 15; // default slight tilt to match head angle
+          renderStaticFilter();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function handleTryOnClick(event) {
+      if (tryonMode !== 'upload') return;
+      const container = document.getElementById('tryon-container');
+      const rect = container.getBoundingClientRect();
+
+      lipCoordX = ((event.clientX - rect.left) / rect.width) * 100;
+      lipCoordY = ((event.clientY - rect.top) / rect.height) * 100;
+
+      renderStaticFilter();
+    }
+
+    function adjustLipScale(delta) {
+      lipScale = Math.max(0.4, Math.min(3.0, lipScale + delta));
+      renderStaticFilter();
+    }
+
+    function adjustLipRotation(degrees) {
+      lipAngle += degrees;
+      renderStaticFilter();
+    }
+
+    function startLiveRenderLoop() {
+      const webcam = document.getElementById('webcam');
+      const canvas = document.getElementById('tryon-canvas');
+      const ctx = canvas.getContext('2d');
+
+      canvas.width = webcam.videoWidth || 640;
+      canvas.height = webcam.videoHeight || 480;
+
+      function renderLoop() {
+        if (tryonMode !== 'cam' || !webcamStream) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.save();
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+
+        drawFullLipMakeup(ctx, canvas.width / 2, canvas.height / 2 + (canvas.height * 0.12), 1.0, 0);
+
+        ctx.restore();
+        requestAnimationFrame(renderLoop);
+      }
+      renderLoop();
+    }
+
+    function renderStaticFilter() {
+      const img = document.getElementById('uploaded-photo');
+      const canvas = document.getElementById('tryon-canvas');
+      const ctx = canvas.getContext('2d');
+
+      if (!img.src) return;
+
+      canvas.width = img.naturalWidth || 640;
+      canvas.height = img.naturalHeight || 480;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const targetX = (lipCoordX / 100) * canvas.width;
+      const targetY = (lipCoordY / 100) * canvas.height;
+
+      drawFullLipMakeup(ctx, targetX, targetY, lipScale, lipAngle);
+    }
+
+    function drawFullLipMakeup(ctx, x, y, scale, angleDeg) {
+      const baseW = 140;
+      const baseH = 52;
+      const lipW = baseW * scale;
+      const lipH = baseH * scale;
+
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate((angleDeg * Math.PI) / 180); // Apply rotation matching head tilt
+
+      ctx.globalCompositeOperation = 'multiply';
+      ctx.fillStyle = activeHexColor;
+      ctx.globalAlpha = 0.78;
+
+      // Upper Lip
+      ctx.beginPath();
+      ctx.moveTo(-lipW / 2, 2);
+      ctx.bezierCurveTo(-lipW * 0.38, -lipH * 1.1, -lipW * 0.15, -lipH * 0.95, 0, -lipH * 0.55);
+      ctx.bezierCurveTo(lipW * 0.15, -lipH * 0.95, lipW * 0.38, -lipH * 1.1, lipW / 2, 2);
+      ctx.bezierCurveTo(lipW * 0.35, -lipH * 0.1, lipW * 0.15, -lipH * 0.05, 0, -lipH * 0.3);
+      ctx.bezierCurveTo(-lipW * 0.15, -lipH * 0.05, -lipW * 0.35, -lipH * 0.1, -lipW / 2, 2);
+      ctx.closePath();
+      ctx.fill();
+
+      // Lower Lip
+      ctx.beginPath();
+      ctx.moveTo(-lipW / 2, 2);
+      ctx.bezierCurveTo(-lipW * 0.38, lipH * 1.15, lipW * 0.38, lipH * 1.15, lipW / 2, 2);
+      ctx.bezierCurveTo(lipW * 0.3, lipH * 0.2, lipW * 0.15, lipH * 0.1, 0, lipH * 0.05);
+      ctx.bezierCurveTo(-lipW * 0.15, lipH * 0.1, -lipW * 0.3, lipH * 0.2, -lipW / 2, 2);
+      ctx.closePath();
+      ctx.fill();
+
+      // Glossy Highlights
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = "rgba(255, 255, 255, 0.45)";
+      ctx.beginPath();
+      ctx.ellipse(-12 * scale, -16 * scale, 10 * scale, 3.5 * scale, Math.PI / 8, 0, Math.PI * 2);
+      ctx.ellipse(12 * scale, -16 * scale, 10 * scale, 3.5 * scale, -Math.PI / 8, 0, Math.PI * 2);
+      ctx.ellipse(0, 18 * scale, 22 * scale, 5 * scale, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function goToDispense() {
+      const hex = document.getElementById('target-hex').textContent;
+      const name = document.getElementById('target-name').textContent;
+      window.location.href = `matchine.html?hex=${encodeURIComponent(hex)}&name=${encodeURIComponent(name)}`;
+    }
+  </script>
+
+</body>
+</html>

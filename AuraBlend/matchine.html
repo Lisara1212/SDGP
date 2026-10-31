@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraBlend - IoT Machine Telemetry</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex flex-col justify-between p-3 md:p-6 text-slate-800 bg-[#faf7f7]">
+
+  <div class="max-w-[1400px] w-full mx-auto space-y-5">
+    
+    <!-- HEADER BAR -->
+    <header class="flex flex-wrap items-center justify-between gap-4 bg-white px-5 py-3.5 rounded-2xl border border-rose-100 shadow-sm">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-500 via-pink-500 to-amber-400 p-0.5 flex items-center justify-center shadow-md shadow-rose-500/10">
+          <div class="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
+            <i class="fa-solid fa-wand-magic-sparkles text-rose-500 text-lg"></i>
+          </div>
+        </div>
+        <div>
+          <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-rose-600 via-pink-600 to-amber-600 bg-clip-text text-transparent">AuraBlend</span>
+          <p class="text-[10px] font-bold tracking-wider text-slate-400 uppercase">AI IoT LIPSTICK FORMULATOR</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2.5 bg-rose-50/60 px-4 py-1.5 rounded-full border border-rose-100 text-xs font-medium">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]"></span>
+        <span class="text-slate-600">IoT Device: <span id="device-status" class="text-emerald-600 font-semibold">Online (Aura-x1)</span></span>
+      </div>
+    </header>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="bg-white px-4 py-2.5 rounded-xl border border-rose-100 shadow-sm flex items-center justify-between overflow-x-auto">
+      <div class="flex items-center gap-2">
+        <a href="index.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="matchine.html" class="px-4 py-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold flex items-center gap-2 transition"><i class="fa-solid fa-microchip text-amber-500"></i> Matchine</a>
+        <a href="ideas.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-lightbulb text-amber-500"></i> Ideas</a>
+        <a href="compare.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-code-compare text-rose-400"></i> Compare</a>
+        <a href="saved.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-bookmark text-pink-500"></i> Saved</a>
+        <a href="create.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-circle-plus text-emerald-500"></i> Create</a>
+        <a href="tryon.html" class="px-4 py-2 rounded-lg text-slate-600 hover:text-rose-600 hover:bg-rose-50/50 text-xs font-semibold flex items-center gap-2 transition"><i class="fa-solid fa-face-smile text-rose-500"></i> Try On</a>
+      </div>
+
+      <!-- Account Button -->
+      <div id="user-profile-badge" class="flex items-center gap-2">
+        <a href="auth.html" id="auth-link" class="px-4 py-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold flex items-center gap-2 transition">
+          <i class="fa-solid fa-user"></i> <span id="nav-username">Sign In</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- MACHINE TELEMETRY & DISPENSING PROGRESS -->
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      
+      <!-- Left: Cartridge Status & Live Generation Terminal -->
+      <section class="lg:col-span-7 bg-white rounded-2xl border border-rose-100 p-5 space-y-4 shadow-sm">
+        <div class="flex items-center justify-between">
+          <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-microchip text-amber-500"></i> IoT Hardware Dispensing Telemetry
+          </h2>
+          <span class="text-xs text-slate-400 font-mono">Controller v2.4</span>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 text-center">
+          <div class="bg-rose-50/40 p-3 rounded-xl border border-rose-100">
+            <div class="text-[10px] text-pink-600 font-bold mb-1">PINK LIQUID</div>
+            <div class="w-full bg-rose-100 h-20 rounded-lg relative overflow-hidden flex flex-col justify-end p-1">
+              <div id="bar-pink" class="w-full bg-pink-500 rounded-md transition-all duration-300" style="height: 85%"></div>
+            </div>
+            <span class="text-xs text-slate-700 font-mono mt-2 block font-bold">85%</span>
+          </div>
+
+          <div class="bg-rose-50/40 p-3 rounded-xl border border-rose-100">
+            <div class="text-[10px] text-rose-600 font-bold mb-1">RED LIQUID</div>
+            <div class="w-full bg-rose-100 h-20 rounded-lg relative overflow-hidden flex flex-col justify-end p-1">
+              <div id="bar-red" class="w-full bg-red-600 rounded-md transition-all duration-300" style="height: 62%"></div>
+            </div>
+            <span class="text-xs text-slate-700 font-mono mt-2 block font-bold">62%</span>
+          </div>
+
+          <div class="bg-rose-50/40 p-3 rounded-xl border border-rose-100">
+            <div class="text-[10px] text-amber-700 font-bold mb-1">BROWN LIQUID</div>
+            <div class="w-full bg-rose-100 h-20 rounded-lg relative overflow-hidden flex flex-col justify-end p-1">
+              <div id="bar-brown" class="w-full bg-amber-700 rounded-md transition-all duration-300" style="height: 90%"></div>
+            </div>
+            <span class="text-xs text-slate-700 font-mono mt-2 block font-bold">90%</span>
+          </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div id="progress-container" class="w-full bg-rose-50 h-2.5 rounded-full overflow-hidden border border-rose-100 hidden">
+          <div id="dispense-progress" class="bg-gradient-to-r from-rose-500 to-amber-500 h-full w-0 transition-all duration-200"></div>
+        </div>
+
+        <div id="terminal-out" class="bg-slate-900 border border-slate-800 rounded-xl p-3 font-mono text-xs text-emerald-400 h-28 overflow-y-auto leading-relaxed space-y-1 shadow-inner">
+          > Hardware initialized. Waiting for formula payload...<br>
+          > Bluetooth connection established (-42dBm).
+        </div>
+      </section>
+
+      <!-- Right: Incoming Formula Showcase Card -->
+      <section class="lg:col-span-5 bg-white rounded-2xl border border-rose-100 p-5 space-y-4 shadow-sm flex flex-col justify-between">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 flex items-center gap-2 mb-3">
+            <i class="fa-solid fa-bolt text-amber-500"></i> Active Dispatch Target
+          </h2>
+          <div id="target-display" class="bg-rose-50/40 p-4 rounded-xl border border-rose-100 text-center space-y-3">
+            <div id="target-color-box" class="w-20 h-20 mx-auto rounded-full shadow-md border-2 border-rose-200 bg-rose-600" style="background-color: #9B111E;"></div>
+            <div>
+              <h3 id="target-name" class="text-sm font-bold text-slate-900">Default Crimson Blend</h3>
+              <p id="target-hex" class="text-xs font-mono text-slate-500">#9B111E</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-2">
+          <button onclick="startDispenseProcess()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:brightness-105 text-slate-950 font-bold text-xs py-3.5 rounded-xl shadow-xs transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-play"></i> Run Dispense Simulation
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const hex = urlParams.get('hex');
+      const name = urlParams.get('name');
+
+      if (hex && name) {
+        document.getElementById('target-hex').textContent = hex;
+        document.getElementById('target-name').textContent = name;
+        document.getElementById('target-color-box').style.backgroundColor = hex;
+
+        logTerm(`Received formula payload: "${name}" (${hex})`);
+        setTimeout(startDispenseProcess, 600);
+      }
+    };
+
+    function startDispenseProcess() {
+      const progressContainer = document.getElementById('progress-container');
+      const progressBar = document.getElementById('dispense-progress');
+      
+      progressContainer.classList.remove('hidden');
+      progressBar.style.width = '0%';
+
+      logTerm("Sending formula parameters to Aura-x1 micro-pumps via Bluetooth...");
+
+      let step = 0;
+      const interval = setInterval(() => {
+        step += 25;
+        progressBar.style.width = step + "%";
+
+        if (step === 25) {
+          logTerm("Pumping precise micro-doses from Pink, Red, and Brown cartridges...");
+        } else if (step === 75) {
+          logTerm("Thermal homogenization & bullet molding in progress...");
+        } else if (step >= 100) {
+          clearInterval(interval);
+          logTerm("Dispensing complete! Lipstick bullet successfully formulated.");
+          document.getElementById('device-status').textContent = "Ready / Formulated";
+        }
+      }, 500);
+    }
+
+    function logTerm(msg) {
+      const term = document.getElementById('terminal-out');
+      term.innerHTML += `> ${msg}<br>`;
+      term.scrollTop = term.scrollHeight;
+    }
+  </script>
+
+  <!-- STEP 3 LOGIN SCRIPT -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedUser = localStorage.getItem('aurablend_user');
+      const authLink = document.getElementById('auth-link');
+      
+      if (savedUser && authLink) {
+        authLink.innerHTML = `<i class="fa-solid fa-user-check text-emerald-500"></i> Hello, <span class="text-slate-900 font-extrabold">${savedUser}</span>`;
+        authLink.href = "#";
+        authLink.className = "px-4 py-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold flex items-center gap-2 transition";
+        authLink.title = "Click to Log Out";
+        
+        authLink.onclick = function(e) {
+          e.preventDefault();
+          if (confirm("Do you want to log out of AuraBlend?")) {
+            localStorage.removeItem('aurablend_user');
+            window.location.reload();
+          }
+        };
+      }
+    });
+  </script>
+
+</body>
+</html>
