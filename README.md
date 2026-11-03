@@ -1,10 +1,9 @@
-# AuraBlend front end (fancy edition)
+# AuraBlend front end (glass edition)
 
-Open `index.html` in a browser. No build step and no libraries.
+Open it through a web server (for example the VS Code "Live Server" extension, or Vercel). Camera access needs http(s), not file://.
 
-Files: index, create, ideas, saved, machine, about (.html), style.css (all design), app.js (all logic).
-Team photos: add JPGs to the `team/` folder (see team/README.txt).
-Fonts come from Google Fonts when online and fall back to system fonts offline.
-
-Saved shades, cartridge levels and jobs are kept in the browser's localStorage for now.
-Search `BACKEND:` in app.js for the places to call Spring Boot (shades) and MQTT/ESP32 (machine).
+- Look: glassmorphism, light by default, with a sun/moon button for dark. Styles: `style.css` (base) + `glass.css` (the glass skin, linked last). Remove the glass.css link to get the flat version.
+- Studio camera: two fixed boxes (SKIN and OUTFIT). Works for the live camera (mirrored view) and uploaded photos (the crop shown is the crop measured).
+- Team photos: put JPGs in `team/` named lisara-aponsu.jpg, kawmini-dissanayaka.jpg, dhananjaya-adeepa.jpg, kabilan-jeyakrishnan.jpg, mineli-kahanda.jpg. The LinkedIn links are only a fallback and expire on 19 Nov 2026.
+- `404.html`, `sitemap.xml`, `robots.txt` and Open Graph tags are included (domain https://www.aurablend.lk).
+- Saved shades, cartridge levels and jobs live in localStorage for now. Search `BACKEND:` in app.js for the Spring Boot / MQTT hooks.
