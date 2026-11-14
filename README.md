@@ -14,8 +14,6 @@ Open it through a web server (for example the VS Code "Live Server" extension, o
 - Passwords are stored as salted PBKDF2 hashes. Photos are never stored.
 - This is a front-end demo: data lives in the visitor's own browser. For real accounts, build the Spring Boot + MySQL back end (bcrypt/Argon2 passwords, HTTPS, httpOnly-cookie sessions, one row per user) and replace the functions marked `BACKEND:` in auth.js.
 
-## Continue with Google / Microsoft (social.js)
-Both buttons are on `login.html` and `signup.html`. They stay "not switched on" until you paste the IDs at the top of `social.js`.
+## Continue with Google (social.js)
+The button is on `login.html` and `signup.html`. They stay "not switched on" until you paste the IDs at the top of `social.js`.
 - **Google:** console.cloud.google.com → create a project → APIs & Services → OAuth consent screen (External) → Credentials → Create OAuth client ID → *Web application*. Under *Authorized JavaScript origins* add `https://www.aurablend.lk` (and `http://localhost:5500` for testing). Paste the client ID into `googleClientId`.
-- **Microsoft:** entra.microsoft.com → App registrations → New registration → account type *Any Entra directory + personal Microsoft accounts* → Redirect URI (platform *Single-page application*): `https://www.aurablend.lk/login.html` and `https://www.aurablend.lk/signup.html`. Paste the Application (client) ID into `microsoftClientId`.
-- Demo mode creates a local account from the provider's name + email. For production, verify the token in Spring Boot (BACKEND: notes in social.js).

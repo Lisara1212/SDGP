@@ -1,16 +1,15 @@
 /* =====================================================
-   AuraBlend - social.js   (Continue with Google / Microsoft)
-   1. Create a Google OAuth client ID and/or a Microsoft Entra app (see README.md),
+   AuraBlend - social.js   (Continue with Google)
+   1. Create a Google OAuth client ID (see README.md),
       then paste the IDs below. Until then the buttons explain that they are not set up.
    2. DEMO: the provider's name + email create an account in this browser, same as the email form.
-      BACKEND: send the provider's token to Spring Boot (POST /api/auth/google | /api/auth/microsoft),
+      BACKEND: send the provider's token to Spring Boot (POST /api/auth/google),
       verify it on the server, and return your own session. Never trust the browser alone in production.
    ===================================================== */
 (function (w, d) {
   'use strict';
   var CONFIG = {
-    googleClientId: '94915987559-gv0hpt70h9bospne1cegjsp761f8jet4.apps.googleusercontent.com',
-    microsoftClientId: ''      // the Application (client) ID from Microsoft Entra
+    googleClientId: '94915987559-gv0hpt70h9bospne1cegjsp761f8jet4.apps.googleusercontent.com'
   };
   var USERS = 'aurablend_users_v1', SESSION = 'aurablend_session_v1';
   var wrap = d.querySelector('.social'); if (!wrap) return;
@@ -41,8 +40,8 @@
   }
 
   /* The sign-in pop-up must open straight from the click, or browsers block it. So the Google and
-     Microsoft libraries are loaded as soon as the page opens, and the click only opens the window. */
-  var gClient = null, gWaiter = null, msApp = null, msReady = false;
+      library is loaded as soon as the page opens, and the click only opens the window. */
+  var gClient = null, gWaiter = null;
 
   function setupGoogle() {
     if (!CONFIG.googleClientId) return;
@@ -50,7 +49,7 @@
       gClient = w.google.accounts.oauth2.initTokenClient({
         client_id: CONFIG.googleClientId, scope: 'openid email profile',
         callback: function (r) {
-          var wt = gWaiter; gWaiter = null;
+         gWaiter = null;
           if (!r || !r.access_token) { say('Google did not approve the sign-in' + (r && r.error ? ' (' + r.error + ')' : '') + '. Make sure you picked a test-user account.', true); return; }
           fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: 'Bearer ' + r.access_token } })
             .then(function (x) { return x.json(); })
@@ -65,34 +64,20 @@
       });
     }).catch(function () { console.warn('AuraBlend: could not load the Google sign-in library.'); });
   }
-  function setupMicrosoft() {
-    if (!CONFIG.microsoftClientId) return;
-    load('https://alcdn.msauth.net/browser/2.38.3/js/msal-browser.min.js').then(function () {
-      msApp = new w.msal.PublicClientApplication({ auth: { clientId: CONFIG.microsoftClientId, authority: 'https://login.microsoftonline.com/common', redirectUri: location.origin + location.pathname } });
-      return Promise.resolve(msApp.initialize ? msApp.initialize() : null);
-    }).then(function () { msReady = true; }).catch(function () { console.warn('AuraBlend: could not load the Microsoft sign-in library.'); });
-  }
+
   function clickGoogle() {
     if (!gClient) { say('Google sign-in is still loading (or was blocked by an extension). Wait a second and press the button again.', true); return; }
     say(''); gWaiter = true;
     gClient.requestAccessToken({ prompt: 'select_account' });          // opens the pop-up right now, from the click
   }
-  function clickMicrosoft() {
-    if (!msReady) { say('Microsoft sign-in is still loading (or was blocked by an extension). Wait a second and press the button again.', true); return; }
-    say('');
-    msApp.loginPopup({ scopes: ['openid', 'profile', 'email'] }).then(function (r) {
-      var c = r.idTokenClaims || {};
-      finish('microsoft', { name: (r.account && r.account.name) || c.name, email: c.email || c.preferred_username || (r.account && r.account.username) });
-    }).catch(function () { say('Could not sign in with Microsoft. The window may have been closed or blocked. Try again, or use your email.', true); });
-  }
 
-  [].forEach.call(wrap.querySelectorAll('[data-provider]'), function (btn) {
+
+  [].forEach.call(wrap.querySelectorAll('[data-provider="google"]'), function (btn) {
     btn.addEventListener('click', function () {
-      var prov = btn.getAttribute('data-provider'), id = prov === 'google' ? CONFIG.googleClientId : CONFIG.microsoftClientId, label = prov === 'google' ? 'Google' : 'Microsoft';
-      if (!id) { say(label + ' sign-in is not switched on yet. The team needs to add the ' + label + ' client ID in social.js (steps are in README.md). Please use your email for now.', true); return; }
-      if (prov === 'google') clickGoogle(); else clickMicrosoft();
+      if (!CONFIG.googleClientId) { say('Google sign-in is not switched on yet. Please use your email for now.', true); return; }
+      clickGoogle();
     });
   });
-  setupGoogle(); setupMicrosoft();
+  setupGoogle();
   w.AuraSocial = { finish: finish };
 })(window, document);
