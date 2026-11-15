@@ -42,6 +42,8 @@
 <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
 <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol>
 <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
 <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M4 9h3.2v11H4zM5.6 4a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8zM10 9h3v1.5c.6-1 1.8-1.8 3.5-1.8 3.2 0 3.9 2.1 3.9 4.8V20h-3.2v-5.7c0-1.4 0-2.8-1.8-2.8s-2.2 1.300-2.200 2.700V20H10z"/></symbol>
 </defs></svg>
 <a class="skip" href="#main">Skip to content</a>
@@ -66,7 +68,42 @@
 
 <main id="main" tabindex="-1"><div class="wrap">
 
-<section class="hero" aria-labelledby="hero-title">
+<section class="why" aria-labelledby="why-title">
+  <div class="why__top">
+    <div class="rise">
+      <p class="eyebrow">Why AuraBlend</p>
+      <h2 id="why-title">Lipstick shades come off a shelf. <span class="grad">Yours should come from you.</span></h2>
+      <p class="lead">Shelf shades are the same for everyone. AuraBlend starts with your skin tone and what you wear, then blends a shade made to suit you.</p>
+      <a class="btn btn--ghost" href="#hero">Meet your first shade <svg class="icon why__down" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="card why__vs rise" style="--i:2">
+      <div class="why__col why__col--them">
+        <h3>Off the shelf</h3>
+        <ul class="why__list">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span>A fixed range, the same for everyone</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span>Picked without your outfit in mind</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span>Hard to judge from a tiny swatch</span></li>
+        </ul>
+      </div>
+      <div class="why__col why__col--us">
+        <h3>With AuraBlend</h3>
+        <ul class="why__list">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Endless shades from just three pigments</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Matched to your skin tone and outfit</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Live preview before you save it</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="steps why__benefits">
+    <article class="card step rise"><div class="step__ico"><svg class="icon" aria-hidden="true"><use href="#i-scan"/></svg></div><h3>Starts with you</h3><p>Scan a photo or use your camera. AuraBlend reads your skin tone and outfit colour, then suggests a pigment mix.</p></article>
+    <article class="card step rise" style="--i:1"><div class="step__ico"><svg class="icon" aria-hidden="true"><use href="#i-create"/></svg></div><h3>You stay in control</h3><p>Pink, red and brown sliders let you fine-tune every shade, with the preview updating as you go.</p></article>
+    <article class="card step rise" style="--i:2"><div class="step__ico"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg></div><h3>See it before you keep it</h3><p>Preview the colour on a lip, then save the formulas you love to your own collection.</p></article>
+    <article class="card step rise" style="--i:3"><div class="step__ico"><svg class="icon" aria-hidden="true"><use href="#i-machine"/></svg></div><h3>Made on demand</h3><p>A small machine mixes one shade at a time from three pigment cartridges.</p></article>
+  </div>
+</section>
+
+<section class="hero" id="hero" aria-labelledby="hero-title">
   <div class="rise">
     <p class="eyebrow">AI &middot; IoT &middot; Lipstick formulator</p>
     <h1 id="hero-title">Where your skin tone meets <span class="grad">your outfit</span>, blended into one shade.</h1>
