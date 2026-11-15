@@ -141,6 +141,25 @@ main { padding: 40px 0 120px; }
 @keyframes rise { to { opacity: 1; transform: none; } }
 
 /* ---------------- Home ---------------- */
+/* "Why AuraBlend" intro, above the hero */
+.why { padding-top: 8px; margin-bottom: 72px; }
+.why__top { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+.why h2 { font-size: clamp(32px, 4.8vw, 54px); line-height: 1.06; margin: 14px 0 18px; }
+.why .lead { font-size: 18px; color: var(--muted); max-width: 520px; }
+.why__top .btn { margin-top: 28px; }
+.why__down { transform: rotate(90deg); }
+.why__vs.card { display: grid; grid-template-columns: 1fr 1fr; padding: 0; overflow: hidden; }
+.why__col { padding: 28px 24px; }
+.why__col h3 { font-size: 19px; margin-bottom: 16px; }
+.why__col--us { color: #fff; background: linear-gradient(150deg, #c42f5d, #8a2a78); }
+.why__col--us h3 { color: #fff; }
+.why__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; font-size: 15px; line-height: 1.45; }
+.why__list li { display: flex; align-items: flex-start; gap: 10px; }
+.why__list .icon { width: 18px; height: 18px; margin-top: 2px; }
+.why__col--them .icon { color: var(--muted); }
+.why__col--us .icon { color: #ffe7b8; }
+.why__benefits { margin-top: 28px; }
+
 .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding: 32px 0 8px; }
 .hero h1 { font-size: clamp(40px, 6.4vw, 72px); margin: 14px 0 20px; line-height: 1.04; }
 .hero p.lead { font-size: 18px; color: var(--muted); max-width: 520px; }
@@ -332,6 +351,8 @@ select.input option { background: #1b101c; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-brand { grid-column: 1 / -1; }
   .hero { grid-template-columns: 1fr; gap: 24px; }
+  .why { margin-bottom: 56px; }
+  .why__top { grid-template-columns: 1fr; gap: 32px; }
   .stage { max-width: 360px; }
   .steps, .shade-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid-2 { grid-template-columns: 1fr; }
@@ -362,7 +383,8 @@ select.input option { background: #1b101c; }
   .steps, .shade-row, .idea-grid { grid-template-columns: 1fr; }
   .shade-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .shade-tile__color { height: 100px; }
-  .hero__cta .btn { width: 100%; }
+  .hero__cta .btn, .why__top .btn { width: 100%; }
+  .why__vs.card { grid-template-columns: 1fr; }
   .swatches { grid-template-columns: 1fr; }
   .carts { gap: 10px; }
 }
