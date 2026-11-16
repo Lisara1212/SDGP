@@ -81,10 +81,12 @@
   }
 
   function init() {
-    var u = user(), cta = d.querySelector('.header-cta');
+    var u = user(), cta = d.querySelector('.header-cta'), bar = d.querySelector('.site-header .wrap');
     d.documentElement.classList.toggle('is-auth', !!u);
+    // logged-in people get their name chip: it replaces the "Log in" button, or is added to the header on pages that have no button (profile, 404)
     if (u && cta) cta.replaceWith(buildAccount(u));
-    // guests: the header shows one button, "Log in" (see the markup); logged-in people get their name chip above
+    else if (u && bar && !bar.querySelector('.account')) bar.appendChild(buildAccount(u));
+    // guests: the main pages show one "Log in" button in the header (see the markup); login, sign up, profile and 404 pages have none
     [].forEach.call(d.querySelectorAll('[data-guest]'), function (n) { n.hidden = !!u; });
     [].forEach.call(d.querySelectorAll('[data-user]'), function (n) { n.hidden = !u; });
     var plate = d.querySelector('.get-machine__plate');

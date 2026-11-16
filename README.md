@@ -9,7 +9,7 @@ Open it through a web server (for example the VS Code "Live Server" extension, o
 - Saved shades, cartridge levels and jobs live in localStorage for now. Search `BACKEND:` in app.js for the Spring Boot / MQTT hooks.
 
 ## Accounts (demo, in this browser)
-- `auth.js` is shared by all pages: logged-in people see their first name + avatar (menu: profile, collection, log out) instead of "Get the machine".
+- `auth.js` is shared by all pages: logged-in people see their first name + avatar (menu: profile, collection, log out) instead of the header "Log in" button. The "Log in" button sits in the header of the main pages only (home, studio, machine, ideas, collection, about); it is not on `login.html`, `signup.html`, `profile.html` or `404.html`, and there are no log in links in the footer.
 - Each account has its own saved shades, machine jobs and cartridge levels. `profile.html` shows their details, lets them edit their name, request the machine, download their data and delete their account.
 - Passwords are stored as salted PBKDF2 hashes. Photos are never stored.
 - This is a front-end demo: data lives in the visitor's own browser. For real accounts, build the Spring Boot + MySQL back end (bcrypt/Argon2 passwords, HTTPS, httpOnly-cookie sessions, one row per user) and replace the functions marked `BACKEND:` in auth.js.
