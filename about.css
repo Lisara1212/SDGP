@@ -1,0 +1,245 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:#ffffff;
+    color:#111827;
+}
+
+.container{
+    width:90%;
+    max-width:1300px;
+    margin:auto;
+}
+
+/* NAVBAR */
+
+header{
+    border-bottom:1px solid #e5e7eb;
+}
+
+.navbar{
+    height:80px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:100px;
+    height:auto;
+}
+
+.brand span{
+    font-family:'Cormorant Garamond',serif;
+    font-size:34px;
+    font-weight:700;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:35px;
+}
+
+nav a{
+    text-decoration:none;
+    color:#374151;
+    font-weight:500;
+}
+
+.btn-signin{
+    text-decoration:none;
+    background:#d85d7a;
+    color:white;
+    padding:12px 24px;
+    border-radius:10px;
+}
+
+/* HERO */
+
+.about-hero{
+    text-align:center;
+    padding:120px 0;
+}
+
+.tag{
+    color:#d85d7a;
+    font-weight:600;
+    letter-spacing:1px;
+}
+
+.about-hero h1{
+    font-size:60px;
+    margin:20px 0;
+}
+
+.about-hero p{
+    max-width:800px;
+    margin:auto;
+    line-height:1.8;
+    color:#6b7280;
+}
+
+/* JOURNEY */
+
+.journey{
+    padding:100px 0;
+}
+
+.journey h2{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:25px;
+}
+
+.journey p{
+    max-width:900px;
+    margin:auto;
+    text-align:center;
+    line-height:1.8;
+    color:#6b7280;
+}
+
+/* MISSION */
+
+.mission{
+    background:#fafafa;
+    padding:100px 0;
+}
+
+.mission h2{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:25px;
+}
+
+.mission p{
+    max-width:900px;
+    margin:auto;
+    text-align:center;
+    line-height:1.8;
+    color:#6b7280;
+}
+
+/* TEAM */
+
+.team{
+    padding:100px 0;
+}
+
+.team h2{
+    text-align:center;
+    font-size:42px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#6b7280;
+    margin:15px 0 50px;
+}
+
+.team-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+.team-card{
+    border:1px solid #e5e7eb;
+    padding:30px;
+    border-radius:15px;
+    text-align:center;
+}
+
+.team-card h3{
+    margin-bottom:10px;
+}
+
+.team-card p{
+    color:#6b7280;
+    margin-bottom:15px;
+}
+
+.team-card a{
+    color:#d85d7a;
+    text-decoration:none;
+    font-weight:600;
+}
+
+/* FOOTER */
+
+footer{
+    background:#111827;
+    color:white;
+    padding-top:60px;
+    margin-top:100px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:50px;
+}
+
+.footer-brand p{
+    color:#cbd5e1;
+    margin-top:15px;
+}
+
+.footer-links,
+.footer-contact{
+    display:flex;
+    flex-direction:column;
+}
+
+.footer-links a,
+.footer-contact a{
+    color:#cbd5e1;
+    text-decoration:none;
+    margin-top:12px;
+}
+
+.copyright{
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+    border-top:1px solid #374151;
+    color:#9ca3af;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    .navbar{
+        flex-direction:column;
+        height:auto;
+        gap:20px;
+        padding:20px 0;
+    }
+
+    nav ul{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .about-hero h1{
+        font-size:42px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+}

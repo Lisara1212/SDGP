@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | AuraBlend</title>
+    <link rel="stylesheet" href="signin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <header>
+        <div class="container navbar">
+            <div class="brand">
+                <img src="src/AuraBlend Logo.jpg"
+                    alt="AuraBlend Logo"
+                    class="logo">
+                <span>AuraBlend.lk</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="studio.html">Studio</a></li>
+                    <li><a href="myshades.html">My Shades</a></li>
+                    <li><a href="machine.html">Machine</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+            <a href="signin.html" class="btn-signin">
+                Sign In
+            </a>
+        </div>
+    </header>
+    <!-- SIGN IN SECTION -->
+    <section class="signup-section">
+        <div class="signup-container">
+            <div class="signup-left">
+                <span class="tag">
+                    WELCOME BACK
+                </span>
+                <h1>
+                    Sign In to AuraBlend
+                </h1>
+                <p>
+                    Open your saved shades and keep blending with our
+                    IoT-powered lipstick blending machine.
+                </p>
+            </div>
+            <div class="signup-card">
+                <h2>Sign In</h2>
+                <button type="button" class="google-btn" id="google-btn"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Continue with Google</button>
+                <p class="form-msg" id="social-msg" hidden></p>
+                <div class="or-line"><span>or use your email</span></div>
+                <form id="login-form" novalidate>
+                    <p class="form-msg" id="form-msg" role="alert" hidden></p>
+                    <div class="input-group">
+                        <label for="email">Email Address</label>
+                        <input id="email" type="email" placeholder="Enter your email" autocomplete="email">
+                        <p class="field-err" id="email-err" hidden></p>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input id="password" type="password" placeholder="Enter your password" autocomplete="current-password">
+                        <p class="field-err" id="password-err" hidden></p>
+                    </div>
+                    <button type="submit" id="submit-btn">
+                        Sign In
+                    </button>
+                </form>
+                <p class="login-link">
+                    New to AuraBlend?
+                    <a href="signup.html">
+                        Create an account
+                    </a>
+                </p>
+            </div>
+        </div>
+    </section>
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <h3>AuraBlend</h3>
+                <p>
+                    Personalized Beauty Through Smart Technology.
+                </p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <a href="home.html">Home</a>
+                <a href="studio.html">Studio</a>
+                <a href="myshades.html">My Shades</a>
+                <a href="machine.html">Machine</a>
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <a href="mailto:aurablendlk@gmail.com">
+                    aurablendlk@gmail.com
+                </a>
+                <a href="https://www.facebook.com/share/1FcUeJAHaQ/" target="_blank">
+                    Facebook
+                </a>
+                <a href="https://www.instagram.com/aurablendlk" target="_blank">
+                    Instagram
+                </a>
+                <a href="https://www.linkedin.com/company/aurablend123/" target="_blank">
+                    LinkedIn
+                </a>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 AuraBlend.lk | All Rights Reserved
+        </div>
+    </footer>
+<script src="auth.js"></script>
+</body>
+</html>
