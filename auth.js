@@ -1,112 +1,93 @@
-/* AuraBlend account pages (sign in + sign up). Demo mode: accounts live in this browser (localStorage).
-   Passwords are stored as salted PBKDF2-SHA-256 hashes. Replace with Firebase Authentication for production. */
-(function () {
+/* =====================================================
+   AuraBlend - auth.js   (shared by every page)
+   DEMO accounts kept in this browser (localStorage). Each account gets its own
+   saved shades, machine jobs and cartridge levels.
+   BACKEND: when Spring Boot + MySQL are ready, replace user(), update(), logout()
+   and hash() with calls to /api/auth/* and keep the rest of the pages as they are.
+   ===================================================== */
+(function (w) {
   'use strict';
-  var GOOGLE_CLIENT_ID = '94915987559-gv0hpt70h9bospne1cegjsp761f8jet4.apps.googleusercontent.com';
-  var USERS = 'aurablend_users_v1', SESSION = 'aurablend_session_v1', NEXT = 'home.html';
-  var $ = function (id) { return document.getElementById(id); };
-  var login = $('login-form'), signup = $('signup-form'), form = login || signup;
-  var msg = $('form-msg'), submit = $('submit-btn'), idle = submit.textContent.trim();
+  var USERS = 'aurablend_users_v1', SESSION = 'aurablend_session_v1';
+  var d = document;
 
-  try { if (JSON.parse(localStorage.getItem(SESSION) || sessionStorage.getItem(SESSION))) { location.replace(NEXT); return; } } catch (e) {}
+  function rj(store, k) { try { return JSON.parse(store.getItem(k)); } catch (e) { return null; } }
+  function users() { var v = rj(localStorage, USERS); return Array.isArray(v) ? v : []; }
+  function saveUsers(l) { try { localStorage.setItem(USERS, JSON.stringify(l)); return true; } catch (e) { return false; } }
+  function session() { return rj(sessionStorage, SESSION) || rj(localStorage, SESSION); }
+  function clearSession() { try { sessionStorage.removeItem(SESSION); localStorage.removeItem(SESSION); } catch (e) {} }
 
-  function readUsers() { try { var v = JSON.parse(localStorage.getItem(USERS)); return Array.isArray(v) ? v : []; } catch (e) { return []; } }
-  function writeUsers(l) { try { localStorage.setItem(USERS, JSON.stringify(l)); return true; } catch (e) { return false; } }
+  function user() {
+    var s = session(); if (!s || !s.email) return null;
+    var u = users().filter(function (x) { return x.email === s.email; })[0];
+    if (!u) { clearSession(); return null; }
+    return u;
+  }
+  function first(u) { return String((u && u.name) || '').trim().split(/\s+/)[0] || 'Account'; }
+  function initials(u) { var p = String((u && u.name) || '?').trim().split(/\s+/); return ((p[0] || '?')[0] + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase(); }
+  // storage key for the current person: guests share the plain key, accounts get their own
+  function key(base) { var u = user(); return u ? base + '::' + u.id : base; }
+  function update(patch) {
+    var u = user(); if (!u) return false;
+    var l = users(); l.forEach(function (x) { if (x.id === u.id) for (var k in patch) x[k] = patch[k]; });
+    if (patch.name) { var s = session(); if (s) { s.name = patch.name; try { (rj(sessionStorage, SESSION) ? sessionStorage : localStorage).setItem(SESSION, JSON.stringify(s)); } catch (e) {} } }
+    return saveUsers(l);
+  }
+  function requestMachine() { return update({ machine: { requested: true, ts: Date.now() } }); }
+  function logout() { clearSession(); w.location.href = 'index.html'; }
+  function deleteAccount() {
+    var u = user(); if (!u) return;
+    ['aurablend_saved_v2', 'aurablend_levels_v2', 'aurablend_jobs_v2'].forEach(function (b) { try { localStorage.removeItem(b + '::' + u.id); } catch (e) {} });
+    saveUsers(users().filter(function (x) { return x.id !== u.id; }));
+    clearSession(); w.location.href = 'index.html';
+  }
+  function exportData() {
+    var u = user(); if (!u) return null;
+    function g(b) { return rj(localStorage, b + '::' + u.id); }
+    return { account: { name: u.name, email: u.email, createdAt: new Date(+u.id || u.ts || 0).toISOString(), machine: u.machine || null },
+             savedShades: g('aurablend_saved_v2') || [], machineJobs: g('aurablend_jobs_v2') || [], note: 'Password is never exported. No photos are ever stored.' };
+  }
+
+  // Password hashing. 'p1' = PBKDF2-SHA-256, 150,000 rounds (new accounts). Older accounts keep the old check until they next sign up.
   function hex(buf) { return Array.prototype.map.call(new Uint8Array(buf), function (x) { return x.toString(16).padStart(2, '0'); }).join(''); }
-  function salt() { var a = new Uint8Array(16); crypto.getRandomValues(a); return hex(a); }
-  function kdf(pw, s) {
+  function hash(salt, pw, kdf) {
     var enc = new TextEncoder();
-    return crypto.subtle.importKey('raw', enc.encode(pw), 'PBKDF2', false, ['deriveBits']).then(function (k) {
-      return crypto.subtle.deriveBits({ name: 'PBKDF2', salt: enc.encode(s), iterations: 150000, hash: 'SHA-256' }, k, 256);
+    if (!(w.crypto && crypto.subtle && w.TextEncoder)) { var h = 5381, s = salt + pw; for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return Promise.resolve('x' + (h >>> 0).toString(16)); }
+    if (kdf === 'p1') return crypto.subtle.importKey('raw', enc.encode(pw), 'PBKDF2', false, ['deriveBits']).then(function (k) {
+      return crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: enc.encode(salt), iterations: 150000 }, k, 256);
     }).then(hex);
+    return crypto.subtle.digest('SHA-256', enc.encode(salt + pw)).then(hex);
   }
-  function legacySha(str) { return crypto.subtle.digest('SHA-256', new TextEncoder().encode(str)).then(hex); }
-  function say(el, t, ok) { el.textContent = t; el.className = 'form-msg' + (ok ? ' ok' : ''); el.hidden = !t; }
-  function err(id, t) {
-    var i = $(id), e = $(id + '-err'); if (!i || !e) return !t;
-    e.textContent = t || ''; e.hidden = !t;
-    if (t) i.setAttribute('aria-invalid', 'true'); else i.removeAttribute('aria-invalid');
-    return !t;
-  }
-  function busy(b, t) { submit.disabled = b; submit.textContent = b ? t : idle; }
-  function begin(user) {
-    try {
-      localStorage.setItem(SESSION, JSON.stringify({ name: user.name, email: user.email, ts: Date.now() }));
-      sessionStorage.removeItem(SESSION);
-    } catch (e) { return false; }
-    return true;
-  }
-  var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  var rules = {
-    name: function (v) { v = v.trim(); return !v ? 'Enter your full name.' : v.length < 2 ? 'Your name must be at least 2 characters.' : ''; },
-    email: function (v) { v = v.trim(); return !v ? 'Enter your email address.' : EMAIL.test(v) ? '' : 'Enter a valid email address, like name@example.com.'; },
-    password: function (v) {
-      if (!v) return signup ? 'Create a password.' : 'Enter your password.';
-      if (!signup) return '';
-      return v.length < 8 ? 'Use at least 8 characters.' : (/[A-Za-z]/.test(v) && /\d/.test(v)) ? '' : 'Include at least one letter and one number.';
-    },
-    confirm: function (v) { return !v ? 'Repeat your password.' : v === $('password').value ? '' : 'The passwords do not match.'; }
-  };
-  var ids = signup ? ['name', 'email', 'password', 'confirm'] : ['email', 'password'];
-  ids.forEach(function (id) {
-    $(id).addEventListener('input', function () { if ($(id).hasAttribute('aria-invalid')) err(id, rules[id]($(id).value)); say(msg, ''); });
-  });
-  function validate() { var first = null; ids.forEach(function (id) { if (!err(id, rules[id]($(id).value)) && !first) first = $(id); }); if (first) first.focus(); return !first; }
 
-  form.addEventListener('submit', function (ev) {
-    ev.preventDefault(); say(msg, '');
-    if (!validate()) return;
-    if (!(window.crypto && crypto.subtle)) { say(msg, 'This browser cannot secure passwords here. Open the site over https.'); return; }
-    var email = $('email').value.trim().toLowerCase(), pw = $('password').value;
-    if (signup) {
-      busy(true, 'Creating account...');
-      if (readUsers().some(function (u) { return u.email === email; })) { busy(false); err('email', 'An account with this email already exists. Sign in instead.'); return; }
-      var s = salt();
-      kdf(pw, s).then(function (h) {
-        var l = readUsers();
-        l.push({ id: String(Date.now()), name: $('name').value.trim(), email: email, salt: s, hash: h, kdf: 'p1', ts: Date.now() });
-        if (!writeUsers(l) || !begin(l[l.length - 1])) { busy(false); say(msg, 'Could not save your account: browser storage is blocked.'); return; }
-        say(msg, 'Account created. Taking you in...', true); setTimeout(function () { location.href = NEXT; }, 600);
-      }).catch(function () { busy(false); say(msg, 'Something went wrong. Please try again.'); });
-    } else {
-      busy(true, 'Signing in...');
-      var u = readUsers().filter(function (x) { return x.email === email; })[0];
-      var bad = function () { busy(false); say(msg, 'That email and password do not match an account.'); };
-      if (!u || !u.hash) { bad(); return; }
-      (u.kdf === 'p1' ? kdf(pw, u.salt) : legacySha(u.salt + pw)).then(function (h) {
-        if (h !== u.hash) { bad(); return; }
-        if (!begin(u)) { busy(false); say(msg, 'Could not sign in: browser storage is blocked.'); return; }
-        location.href = NEXT;
-      }).catch(function () { busy(false); say(msg, 'Something went wrong. Please try again.'); });
-    }
-  });
+  w.AuraAuth = { user: user, first: first, initials: initials, key: key, update: update, requestMachine: requestMachine, logout: logout,
+                 deleteAccount: deleteAccount, exportData: exportData, hash: hash, users: users };
 
-  /* Google sign-in (token client; library preloaded so the pop-up opens straight from the click) */
-  var gBtn = $('google-btn'), note = $('social-msg'), gClient = null;
-  function finish(info) {
-    var email = String(info.email || '').trim().toLowerCase(), name = String(info.name || '').trim() || email.split('@')[0];
-    if (!email) { say(note, 'That Google account did not share an email address.'); return; }
-    var l = readUsers(), u = l.filter(function (x) { return x.email === email; })[0];
-    if (!u) { u = { id: String(Date.now()), name: name, email: email, provider: 'google', ts: Date.now() }; l.push(u); }
-    if (!writeUsers(l) || !begin(u)) { say(note, 'Could not sign in: browser storage is blocked.'); return; }
-    say(note, 'Welcome, ' + u.name.split(' ')[0] + '. Taking you in...', true); setTimeout(function () { location.href = NEXT; }, 600);
+  /* ---------- header chip, footer links, machine band ---------- */
+  function el(tag, cls, text) { var e = d.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function countOf(base, u) { var v = rj(localStorage, base + '::' + u.id); return Array.isArray(v) ? v.length : 0; }
+
+  function buildAccount(u) {
+    var wrap = el('div', 'account'), btn = el('button', 'account__btn');
+    btn.type = 'button'; btn.setAttribute('aria-haspopup', 'true'); btn.setAttribute('aria-expanded', 'false');
+    btn.appendChild(el('span', 'account__av', initials(u))); btn.appendChild(el('span', 'account__name', first(u)));
+    var menu = el('div', 'account__menu'); menu.hidden = true;
+    var head = el('div', 'account__head'); head.appendChild(el('b', '', u.name)); head.appendChild(el('small', '', u.email)); menu.appendChild(head);
+    [['profile.html', 'Profile & details'], ['saved.html', 'My collection (' + countOf('aurablend_saved_v2', u) + ')'], ['machine.html', 'The machine']].forEach(function (x) { var a = el('a', '', x[1]); a.href = x[0]; menu.appendChild(a); });
+    var out = el('button', 'account__out', 'Log out'); out.type = 'button'; out.addEventListener('click', logout); menu.appendChild(out);
+    function close() { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); }
+    btn.addEventListener('click', function (e) { e.stopPropagation(); menu.hidden = !menu.hidden; btn.setAttribute('aria-expanded', String(!menu.hidden)); });
+    d.addEventListener('click', function (e) { if (!wrap.contains(e.target)) close(); });
+    d.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    wrap.appendChild(btn); wrap.appendChild(menu); return wrap;
   }
-  var s = document.createElement('script'); s.src = 'https://accounts.google.com/gsi/client'; s.async = true;
-  s.onload = function () {
-    gClient = google.accounts.oauth2.initTokenClient({
-      client_id: GOOGLE_CLIENT_ID, scope: 'openid email profile',
-      callback: function (r) {
-        if (!r || !r.access_token) { say(note, 'Google did not approve the sign-in. Make sure you use a test-user account.'); return; }
-        fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: 'Bearer ' + r.access_token } })
-          .then(function (x) { return x.json(); }).then(finish)
-          .catch(function () { say(note, 'Could not read your Google name and email. Try again.'); });
-      },
-      error_callback: function (e) { say(note, e && e.type === 'popup_closed' ? 'The Google window was closed before finishing.' : 'Your browser blocked the Google window. Allow pop-ups for this site.'); }
-    });
-  };
-  document.head.appendChild(s);
-  gBtn.addEventListener('click', function () {
-    if (!gClient) { say(note, 'Google sign-in is still loading (or blocked by an extension). Wait a moment and try again.'); return; }
-    say(note, ''); gClient.requestAccessToken({ prompt: 'select_account' });
-  });
-})();
+
+  function init() {
+    var u = user(), cta = d.querySelector('.header-cta');
+    d.documentElement.classList.toggle('is-auth', !!u);
+    if (u && cta) cta.replaceWith(buildAccount(u));
+    // guests: the header shows one button, "Log in" (see the markup); logged-in people get their name chip above
+    [].forEach.call(d.querySelectorAll('[data-guest]'), function (n) { n.hidden = !!u; });
+    [].forEach.call(d.querySelectorAll('[data-user]'), function (n) { n.hidden = !u; });
+    var gn = d.getElementById('guest-note'); if (gn) gn.hidden = !!u;
+  }
+  if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', init); else init();
+})(window);
